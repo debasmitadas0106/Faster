@@ -1,0 +1,1 @@
+console.log("initiating faster with the blessings of Ma")
