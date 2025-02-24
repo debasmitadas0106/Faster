@@ -1,4 +1,5 @@
 console.log("initiating faster with the blessings of Ma");
+console.log("i am the ceo bitch");
 const express = require("express");
 const axios = require("axios");
 
