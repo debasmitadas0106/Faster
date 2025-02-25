@@ -2,7 +2,7 @@ console.log("initiating faster with the blessings of Ma");
 console.log("i am the ceo bitch");
 const express = require("express");
 const axios = require("axios");
-
+const fs = require('fs')
 const app = express();
 const PORT = 8080;
 
