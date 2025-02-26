@@ -1,0 +1,140 @@
+swagger: "2.0"
+info:
+  title: Faster
+  description: APIs for Faster services.
+  version: 1.0.0
+host: localhost:8000
+basePath: /api
+schemes:
+  - http
+
+paths:
+
+  /userDetails:
+
+   post:
+    tags:
+      - "userDetails"
+    summary: "Create userDetails"
+    description: "Create userDetails"
+
+    x-swagger-router-controller: "userController"
+    operationId: createUserDetailsController
+
+    consumes:
+      - "application/json"
+    produces:
+      - "application/json"
+
+    parameters:
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/userDetails"
+    responses:
+      "200":
+        description: Success
+        schema:
+          $ref: "#/definitions/ApiResponse"
+      default:
+        description: error
+        schema:
+          $ref: "#/definitions/ErrorResponse"
+
+  #  get:
+  #   tags:
+  #     - "userDetails"
+  #   summary: "Get userDetails"
+  #   description: "Get userDetails"
+
+  #   x-swagger-router-controller: "userController"
+  #   operationId: getUserDetailsController
+
+  #   consumes:
+  #     - "application/json"
+  #   produces:
+  #     - "application/json"
+
+  #   parameters:
+  #     - in: query
+  #       name: email
+  #       type: string
+  #       required: false
+  #       description: email
+  #     - in: query
+  #       name: phone
+  #       type: string
+  #       required: false
+  #       description: phone
+  #   responses:
+  #     "200":
+  #       description: Success
+  #       schema:
+  #         $ref: "#/definitions/ApiResponse"
+  #     default:
+  #       description: error
+  #       schema:
+  #         $ref: "#/definitions/ErrorResponse"
+
+definitions:
+  SampleAPi:
+    type: object
+
+  employeeDetails:
+    type: object
+    properties:
+      name:
+        type: string
+      role:
+        type: string
+      speciality:
+        type: string
+      department:
+        type: string
+
+  userDetails:
+    type: object
+    properties:
+      userName:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      userAddress:
+        type: array
+        items: 
+          type: object
+      location:
+        type: object
+      lastSeen:
+        type: string
+      phone:
+        type: string
+      active:
+        type: boolean
+
+  ApiResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: object
+    example:
+      code: 0
+      data: { "response": "api response Data" }
+
+  ErrorResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
