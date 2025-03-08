@@ -78,21 +78,68 @@ paths:
   #       schema:
   #         $ref: "#/definitions/ErrorResponse"
 
+
+  /Provider:
+
+    post:
+      tags:
+        - "provider"
+      summary: "create provider details"
+      description: "create provider details"
+
+      x-swagger-router-controller: "providerController"
+      operationId: createprovidercontroller
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/provider"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema: 
+            $ref: "#/definitions/ErrorResponse"
+
 definitions:
   SampleAPi:
     type: object
 
-  employeeDetails:
+  provider:
     type: object
     properties:
-      name:
+      username:
         type: string
-      role:
+      firstname:
         type: string
-      speciality:
+      lastname:
         type: string
-      department:
+      email:
         type: string
+      personalphnumber:
+        type: string
+      password:
+        type: string
+      personaladdress:
+        type: string
+      workphnumber:
+        type: string
+      workaddress:
+        type: string
+      StarRating:
+        type: number
+      active:
+        type: boolean
 
   userDetails:
     type: object

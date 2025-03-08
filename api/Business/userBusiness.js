@@ -28,6 +28,4 @@ const createUserDetailsBusiness = async (payload, query) => {
   }
 };
 
-module.exports = {
-  createUserDetailsBusiness,
-};
+module.exports = {createUserDetailsBusiness}

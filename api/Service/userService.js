@@ -1,4 +1,4 @@
-const userSchema = require("../../Schema/users");
+const {userSchema} = require("../../Schema/users");
 const dbConnect = require("../../utils/connectionSetup");
 const mongoose = require("mongoose");
 

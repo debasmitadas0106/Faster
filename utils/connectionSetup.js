@@ -9,8 +9,8 @@ async function ClusterConnection() {
     clusterConnection = await mongoose.createConnection(
       process.env.MONGODB_URI,
       {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
+        useNewUrlParser: true,              //use the newURLparser
+        useUnifiedTopology: true,           // layer for handling and monitoring the connections
       }
     );
     // console.log(clusterConnection);

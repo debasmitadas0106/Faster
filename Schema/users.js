@@ -22,4 +22,23 @@ const userSchema = new Schema(
   }
 );
 
-module.exports = userSchema;
+const useremployeeSchema=new Schema(
+  {
+    username:String,
+    firstName:String,
+    lastName:String,
+    email:String,
+    personalphnumber:String,
+    password:String,
+    personaladdress:String,
+    workphnumber:String,
+    workaddress:String,
+    StarRating:Number,
+    active:Boolean,
+  },
+  {
+    timestamps:true
+  }
+);
+
+module.exports = {userSchema,useremployeeSchema};
