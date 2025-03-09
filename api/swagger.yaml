@@ -110,6 +110,60 @@ paths:
           description: error
           schema: 
             $ref: "#/definitions/ErrorResponse"
+    get:
+      tags:
+        - "provider"
+      summary: "get provider details"
+      description: "get provider details"
+      x-swagger-router-controller: "providerController"
+      operationId: getprovidercontroller
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: query
+          name: email
+          description: "get the email account"
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    delete:
+      tags:
+        - "provider"
+      summary: "delete the provider data"
+      description: "delete provider details"
+      x-swagger-router-controller: "providerController"
+      operationId: deleteprovidercontroller
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: email
+          in: query
+          required: true
+          type: string
+          description: "email will be deleted"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          
 
 definitions:
   SampleAPi:
