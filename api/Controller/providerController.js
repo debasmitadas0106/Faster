@@ -25,7 +25,7 @@ const createprovidercontroller = async (req, res) => {
 const getprovidercontroller = async (req, res) => {
   try {
     console.log("req=", req.query, "res=", res.query);
-    const resp = await getproviderBusiness(req.query, res.query);
+    const resp = await getproviderBusiness(req.query, req.query);
     // console.log('resp=',resp)
     return res.status(200).json({
       success: true,
@@ -43,7 +43,7 @@ const getprovidercontroller = async (req, res) => {
 
 const deleteprovidercontroller = async (req, res) => {
   try {
-    const resp = await deleteproviderBusiness(req.query, req.query);
+    const resp = await deleteproviderBusiness(req.query);
     console.log("resp==", resp);
     return res.status(200).json({
       success: true,
@@ -60,8 +60,7 @@ const deleteprovidercontroller = async (req, res) => {
 };
 const updateprovidercontroller = async (req, res) => {
   try {
-    // console.log('controller is ','req=',req.body,'res=',res.body)
-    const resp = await updateproviderBusiness(req.body, res.body);
+    const resp = await updateproviderBusiness(req.body, req.query);
     return res.status(200).json({
       success: true,
       data: resp,

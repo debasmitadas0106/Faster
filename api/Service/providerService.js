@@ -5,21 +5,9 @@ const mongoose = require("mongoose");
 const findproviderService = async (condition, dbURL = "Faster") => {
   try {
     const conn = await dbConnect(dbURL);
-    console.log("the josn ==", JSON.stringify(condition));
-    if (condition.$or) {
-      condition.$or = condition.$or.filter(
-        (item) => item !== null && item !== undefined
-      );
-      if (condition.$or.length == 0) {
-        throw new Error(
-          "Invalid $or condition: array cannot be empty or contain only null/undefined values"
-        );
-      }
-    }
     const useremployeedetail = await conn
       .model("Providers", useremployeeSchema, "Providers")
       .findOne(condition);
-    // console.log(useremployeedetail)
     return useremployeedetail;
   } catch (error) {
     console.log(error);
@@ -27,14 +15,12 @@ const findproviderService = async (condition, dbURL = "Faster") => {
   }
 };
 
-const createproviderservice = async (Data, dbURL = "Faster") => {
+const createproviderservice = async (data, dbURL = "Faster") => {
   try {
     const conn = await dbConnect(dbURL);
-    console.log('createservice=',JSON.stringify(Data));
     const useremployeedetail = await conn
       .model("Providers", useremployeeSchema, "Providers")
-      .create(Data);
-    console.log('Service data=',Data)
+      .create(data);
     return useremployeedetail;
   } catch (error) {
     console.log(error);
@@ -45,7 +31,7 @@ const createproviderservice = async (Data, dbURL = "Faster") => {
 const deleteproviderservice = async (Data, dbURL = "Faster") => {
   try {
     const conn = await dbConnect(dbURL);
-    console.log(JSON.stringify(Data));
+    //console.log(JSON.stringify(Data));
     const providerdetails = await conn
       .model("Providers", useremployeeSchema, "Providers")
       .deleteOne(Data);
@@ -56,13 +42,34 @@ const deleteproviderservice = async (Data, dbURL = "Faster") => {
   }
 };
 
-const updateproviderservice = async (Data, condition, dbURL = "Faster") => {
+// const updateproviderservice = async (Data, condition, dbURL = "Faster") => {
+//   try {
+//     const conn = await dbConnect(dbURL);
+//     const useremployeedetail = await conn
+//       .model("Providers", useremployeeSchema, "Providers")
+//       .findOneAndUpdate(condition, { $set: Data }, { new: true });
+//     return useremployeedetail;
+//   } catch (error) {
+//     console.log(error);
+//     throw error;
+//   }
+// };
+
+const updateproviderservice = async (condition, data, dbUrl = "Faster") => {
   try {
-    const conn = await dbConnect(dbURL);
-    const useremployeedetail = await conn
-      .model("Providers", useremployeeSchema, "Providers")
-      .findOneAndUpdate(condition, { $set: Data }, { new: true });
-    return useremployeedetail;
+    const conn = await dbConnect(dbUrl);
+
+    const employeeDetails = await conn.model(
+      "Providers",
+      useremployeeSchema,
+      "Providers"
+    );
+
+    const employeeDetailsUpdate = await employeeDetails.updateOne(
+      condition,
+      data
+    );
+    return employeeDetailsUpdate;
   } catch (error) {
     console.log(error);
     throw error;

@@ -175,6 +175,11 @@ paths:
       produces:
         - "application/json"
       parameters:
+        - name: email
+          in: query
+          required: true
+          type: string
+          description: "email"
         - in: body
           name: body
           description: payload

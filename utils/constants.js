@@ -1,0 +1,15 @@
+const METHODS = {
+  ENTERING_TO: "ENTERING_TO",
+  BUSINESS_METHOD: "BUSINESS_METHOD",
+  SERVICE_METHOD: "SERVICE_METHOD",
+
+  MODULES: {
+    USER: {
+      CREATE_USER: "CREATE_USER",
+    },
+  },
+};
+
+module.exports = {
+  METHODS,
+};

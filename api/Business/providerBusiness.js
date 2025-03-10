@@ -29,13 +29,11 @@ const createproviderBusiness = async (payload, query) => {
 
 const getproviderBusiness = async (payload, query) => {
   try {
-    let { username, password, email } = payload;
-    const dbPayload = {
-      ...payload,
-    };
-    const getprovider = await findproviderService({
+    let { username, email } = payload;
+    const condition = {
       $or: [{ username }, { email }],
-    });
+    };
+    const getprovider = await findproviderService(condition);
     return getprovider;
   } catch (error) {
     console.log(error);
@@ -60,11 +58,14 @@ const deleteproviderBusiness = async (payload, query) => {
 const updateproviderBusiness = async (payload, query) => {
   try {
     console.log("payload==", payload);
-    let { username, email } = payload;
+    let { email } = query;
     const dbpayload = {
       ...payload,
     };
-    const providerdetails = await updateproviderservice(dbpayload);
+    const condition = {
+      email: email,
+    };
+    const providerdetails = await updateproviderservice(condition, dbpayload);
     return providerdetails;
   } catch (error) {
     console.log(error);
