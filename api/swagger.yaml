@@ -163,7 +163,33 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/ErrorResponse"
-          
+    patch:
+      tags:
+        - "provider"
+      summary: "update the provider data"
+      description: "update the provider data"
+      x-swagger-router-controller: "providerController"
+      operationId: updateprovidercontroller
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/provider"
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
 definitions:
   SampleAPi:
