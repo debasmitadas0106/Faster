@@ -22,7 +22,6 @@ const createUserDetailsBusiness = async (payload, query) => {
       $or: [{ userName }, { email }],
     });
     logger.debug(`getUser || ${JSON.stringify(getUser)}`);
-    
     if (getUser) {
       return getUser.userName === userName
         ? "Username already exists"
@@ -32,7 +31,7 @@ const createUserDetailsBusiness = async (payload, query) => {
     logger.debug(`userDetails || ${JSON.stringify(userDetails)}`);
     return userDetails;
   } catch (error) {
-    logger.debug(`error || ${JSON.stringify(error)}`);
+    logger.debug( `error || ${JSON.stringify(error)}`)
     console.log(error);
   }
 };
