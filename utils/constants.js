@@ -6,6 +6,7 @@ const METHODS = {
   MODULES: {
     USER: {
       CREATE_USER: "CREATE_USER",
+      FIND_USER: "FIND_USER",
     },
   },
 };

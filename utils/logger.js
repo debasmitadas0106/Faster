@@ -1,82 +1,33 @@
-// const { createLogger, transports, format } = require("winston");
+const { createLogger, transports, format } = require("winston");
 
-// const customFormat = format.combine(
-//   format.timestamp(),
-//   format.printf((info) => {
-//     return `${info.timestamp} <Lilchirp> [${info.level
-//       .toUpperCase()
-//       .padEnd(7)}] => ${info.message}`;
-//   })
-// );
+const loggerInstance = createLogger({
+  level: "debug",
+  format: format.combine(format.timestamp(), format.simple()),
+  transports: [new transports.Console()],
+});
 
-// const logger = createLogger({
-//   format: customFormat,
-//   level: "debug",
-//   transports: [new transports.Console()],
-// });
+class Logger {
+  constructor(context) {
+    this.context = context; // Context can be function name/module name
+  }
 
-// class Logger {
-//   constructor(fnName, trace) {
-//     this.updateInfo(fnName, trace);
+  log(level, message) {
+    const prefix = this.context ? `<Faster> [${this.context}]` : "<Faster>";
+    const logMessage = `${prefix} ${message}`;
+    loggerInstance.log({ level, message: logMessage });
+  }
 
-//     if (fnName || trace) {
-//       this.info("Start");
-//     }
-//   }
+  debug(message) {
+    this.log("debug", message);
+  }
 
-//   updateInfo(fnName, trace) {
-//     this.fnName = fnName;
-//     this.trace = trace;
-//   }
+  info(message) {
+    this.log("info", message);
+  }
 
-//   info(...msg) {
-//     let msgLog = "";
-//     if (this.fnName) {
-//       msgLog = `${this.fnName} | `;
-//     }
-//     if (this.trace) {
-//       msgLog = `${msgLog} ${this.trace} | `;
-//     }
+  error(message) {
+    this.log("error", message);
+  }
+}
 
-//     msg[0] = `${msgLog} ${msg[0]}`;
-//     msg[0] = msg.join(" || ");
-//     logger.info(...msg);
-//   }
-
-//   debug(...msg) {
-//     let msgLog = "";
-
-//     if (this.fnName) {
-//       msgLog = `${this.fnName} | `;
-//     }
-//     if (this.trace) {
-//       msgLog = `${msgLog} ${this.trace} | `;
-//     }
-//     msg[0] = `${msgLog} ${msg[0]}`;
-//     msg = msg.map((data) => {
-//       if (typeof data == "object" || typeof data == "") {
-//         return `|| ${JSON.stringify(data).substring(0, 1500)}`;
-//       }
-//       return data.substring(0, 1500);
-//     });
-//     msg[0] = msg.join(" || ");
-
-//     logger.debug(...msg);
-//   }
-
-//   error(...msg) {
-//     let msgLog = "";
-
-//     if (this.fnName) {
-//       msgLog = `${this.fnName} | `;
-//     }
-//     if (this.trace) {
-//       msgLog = `${msgLog} ${this.trace} | `;
-//     }
-
-//     msg[0] = `${msgLog} ${msg[0]}`;
-//     logger.error(...msg);
-//   }
-// }
-
-// module.exports = Logger;
+module.exports = Logger;

@@ -1,8 +1,14 @@
-const {userSchema} = require("../../Schema/users");
+const { userSchema } = require("../../Schema/users");
 const dbConnect = require("../../utils/connectionSetup");
 const mongoose = require("mongoose");
+const Logger = require("../../utils/logger");
+const { METHODS } = require("../../utils/constants");
 
 const findUserService = async (condition, dbUrl = "Faster") => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.SERVICE_METHOD} || ${METHODS.MODULES.USER.FIND_USER}`
+  );
+  logger.debug(`condition || ${JSON.stringify(condition)}`)
   try {
     const conn = await dbConnect(dbUrl);
 
@@ -18,6 +24,9 @@ const findUserService = async (condition, dbUrl = "Faster") => {
 };
 
 const createUserService = async (data, dbUrl = "Faster") => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.SERVICE_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
+  );
   try {
     const conn = await dbConnect(dbUrl);
 
