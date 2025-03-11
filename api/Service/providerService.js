@@ -8,6 +8,10 @@ const findproviderService = async (condition, dbURL = "Faster") => {
     const useremployeedetail = await conn
       .model("Providers", useremployeeSchema, "Providers")
       .findOne(condition);
+    if (useremployeedetail == null || useremployeedetail == undefined) {
+      const statusCode = 404;
+      return { useremployeedetail: null, statusCode: statusCode };
+    }
     return useremployeedetail;
   } catch (error) {
     console.log(error);
@@ -18,6 +22,13 @@ const findproviderService = async (condition, dbURL = "Faster") => {
 const createproviderservice = async (data, dbURL = "Faster") => {
   try {
     const conn = await dbConnect(dbURL);
+    const existingUser = await conn
+      .model("Providers", useremployeeSchema, "Providers")
+      .findOne({ email: data["email"] });
+
+    if (existingUser) {
+      return { statusCode: 400, email: data["email"] };
+    }
     const useremployeedetail = await conn
       .model("Providers", useremployeeSchema, "Providers")
       .create(data);
@@ -31,7 +42,7 @@ const createproviderservice = async (data, dbURL = "Faster") => {
 const deleteproviderservice = async (Data, dbURL = "Faster") => {
   try {
     const conn = await dbConnect(dbURL);
-    //console.log(JSON.stringify(Data));
+
     const providerdetails = await conn
       .model("Providers", useremployeeSchema, "Providers")
       .deleteOne(Data);
@@ -41,19 +52,6 @@ const deleteproviderservice = async (Data, dbURL = "Faster") => {
     throw error;
   }
 };
-
-// const updateproviderservice = async (Data, condition, dbURL = "Faster") => {
-//   try {
-//     const conn = await dbConnect(dbURL);
-//     const useremployeedetail = await conn
-//       .model("Providers", useremployeeSchema, "Providers")
-//       .findOneAndUpdate(condition, { $set: Data }, { new: true });
-//     return useremployeedetail;
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// };
 
 const updateproviderservice = async (condition, data, dbUrl = "Faster") => {
   try {

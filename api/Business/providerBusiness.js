@@ -11,16 +11,8 @@ const createproviderBusiness = async (payload, query) => {
     const dbpayload = {
       ...payload,
     };
-    console.log("createbusinesspayload=", dbpayload);
-    const getprovider = await findproviderService({
-      $or: [{ username }, { email }],
-    });
-    if (getprovider) {
-      return getprovider.username === username
-        ? "Username already exists in provider"
-        : "Email already exists in provider";
-    }
     const userDetails = await createproviderservice(dbpayload);
+    // console.log('bussiness details in createexist',userDetails);
     return userDetails;
   } catch (error) {
     console.log(error);
@@ -46,18 +38,19 @@ const deleteproviderBusiness = async (payload, query) => {
     const dbPayload = {
       ...payload,
     };
-    // const deleteprovider=await findproviderService({
-    //     $or:[(username),{email}],
-    // });
-    const providerdetails = await deleteproviderservice(dbPayload);
-    return providerdetails;
+    const deleteprovider = await findproviderService({ email });
+    console.log("deletebussin", deleteprovider);
+    if (deleteprovider["statusCode"] != 404) {
+      const providerdetails = await deleteproviderservice(dbPayload);
+      return providerdetails;
+    }
+    return deleteprovider;
   } catch (error) {
     console.log(error);
   }
 };
 const updateproviderBusiness = async (payload, query) => {
   try {
-    console.log("payload==", payload);
     let { email } = query;
     const dbpayload = {
       ...payload,
@@ -65,8 +58,15 @@ const updateproviderBusiness = async (payload, query) => {
     const condition = {
       email: email,
     };
-    const providerdetails = await updateproviderservice(condition, dbpayload);
-    return providerdetails;
+    const provider = await findproviderService({ email });
+
+    if (provider["statusCode"] != 404) {
+      console.log("providerbussinesin==", provider);
+      const providerdetails = await updateproviderservice(condition, dbpayload);
+      return providerdetails;
+    }
+
+    return provider;
   } catch (error) {
     console.log(error);
   }
