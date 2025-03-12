@@ -78,6 +78,72 @@ paths:
         schema:
           $ref: "#/definitions/ErrorResponse"
 
+   patch:
+    tags:
+      - "userDetails"
+    summary: "update userDetails"
+    description: "update userDetails"
+
+    x-swagger-router-controller: "userController"
+    operationId: updateUserDetailsController
+
+    consumes:
+      - "application/json"
+    produces:
+      - "application/json"
+
+    parameters:
+      - in: query
+        name: searchKey
+        type: string
+        required: true
+        description: searchKey
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: "#/definitions/userDetails"
+    responses:
+      "200":
+        description: Success
+        schema:
+          $ref: "#/definitions/ApiResponse"
+      default:
+        description: error
+        schema:
+          $ref: "#/definitions/ErrorResponse"
+
+   delete:
+    tags:
+      - "userDetails"
+    summary: "delete userDetails"
+    description: "delete userDetails"
+
+    x-swagger-router-controller: "userController"
+    operationId: deleteUserDetailsController
+
+    consumes:
+      - "application/json"
+    produces:
+      - "application/json"
+
+    parameters:
+      - in: query
+        name: searchKey
+        type: string
+        required: true
+        description: searchKey
+    responses:
+      "200":
+        description: Success
+        schema:
+          $ref: "#/definitions/ApiResponse"
+      default:
+        description: error
+        schema:
+          $ref: "#/definitions/ErrorResponse"
+
 
   /Provider:
 
