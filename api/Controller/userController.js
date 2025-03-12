@@ -1,22 +1,25 @@
+const { METHODS } = require("../../utils/constants");
+const Logger = require("../../utils/logger");
 const {
   createUserDetailsBusiness,
+  getUserDetailsBusiness,
 } = require("../Business/userBusiness");
 
 const createUserDetailsController = async (req, res) => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.CONTROLLER_METHOD} || ${METHODS.MODULES.USER.GET_USER}`
+  );
+  logger.debug(` req.body || ${req.body}`);
   try {
-    // Pass request body and query params to the business logic
     const resp = await createUserDetailsBusiness(req.body, req.query);
 
-    // Send a success response
     return res.status(200).json({
       success: true,
       data: resp,
     });
   } catch (error) {
-    // Log the error for debugging
+    logger.debug(`error || ${JSON.stringify(error)}`);
     console.error("Error in createEmployeeDetailsController:", error);
-
-    // Send an error response
     return res.status(500).json({
       success: false,
       message: "Internal server error",
@@ -25,4 +28,30 @@ const createUserDetailsController = async (req, res) => {
   }
 };
 
-module.exports = { createUserDetailsController };
+const getUserDetailsController = async (req, res) => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.CONTROLLER_METHOD} || ${METHODS.MODULES.USER.GET_USER}`
+  );
+  logger.debug(
+    ` body || ${JSON.stringify(req.body)} || query || ${JSON.stringify(
+      req.query
+    )}`
+  );
+  try {
+    const resp = await getUserDetailsBusiness(req.body, req.query);
+    return res.status(200).json({
+      success: true,
+      data: resp,
+    });
+  } catch (error) {
+    console.error("Error in createEmployeeDetailsController:", error);
+    logger.debug(`error || ${JSON.stringify(error)}`);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { createUserDetailsController, getUserDetailsController };

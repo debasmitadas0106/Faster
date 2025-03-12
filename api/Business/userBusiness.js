@@ -1,4 +1,5 @@
-const { METHODS } = require("../../utils/constants");
+const { apiResponse } = require("../../utils/apiResponse");
+const { METHODS, STATUS } = require("../../utils/constants");
 const { generateSHA256 } = require("../../utils/encryption");
 const Logger = require("../../utils/logger");
 const {
@@ -29,11 +30,32 @@ const createUserDetailsBusiness = async (payload, query) => {
     }
     const userDetails = await createUserService(dbPayload);
     logger.debug(`userDetails || ${JSON.stringify(userDetails)}`);
-    return userDetails;
+    return apiResponse(STATUS.SUCCESS, "", "user created successfully", userDetails);
   } catch (error) {
-    logger.debug( `error || ${JSON.stringify(error)}`)
+    logger.debug(`error || ${JSON.stringify(error)}`);
     console.log(error);
   }
 };
 
-module.exports = { createUserDetailsBusiness };
+const getUserDetailsBusiness = async (payload, query) => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
+  );
+  try {
+    let { searchKey } = query;
+    logger.debug(`query || ${JSON.stringify(query)}`);
+    const userDetails = await findUserService({
+      $or: [{ userName: searchKey }, { email: searchKey }],
+    });
+    logger.debug(`userDetails || ${JSON.stringify(userDetails)}`);
+    if (!userDetails) {
+      return apiResponse(STATUS.NOT_FOUND, "User not found");
+    }
+    return apiResponse(STATUS.SUCCESS, "", "", userDetails);
+  } catch (error) {
+    logger.debug(`error || ${JSON.stringify(error)}`);
+    console.log(error);
+  }
+};
+
+module.exports = { createUserDetailsBusiness, getUserDetailsBusiness };
