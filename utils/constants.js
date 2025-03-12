@@ -1,16 +1,24 @@
+const STATUS = {
+  SUCCESS: "200",
+  NOT_FOUND: "404",
+};
+
 const METHODS = {
   ENTERING_TO: "ENTERING_TO",
   BUSINESS_METHOD: "BUSINESS_METHOD",
   SERVICE_METHOD: "SERVICE_METHOD",
+  CONTROLLER_METHOD: "CONTROLLER_METHOD",
 
   MODULES: {
     USER: {
       CREATE_USER: "CREATE_USER",
       FIND_USER: "FIND_USER",
+      GET_USER: "GET_USER",
     },
   },
 };
 
 module.exports = {
   METHODS,
+  STATUS,
 };

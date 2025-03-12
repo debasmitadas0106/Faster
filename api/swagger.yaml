@@ -43,40 +43,40 @@ paths:
         schema:
           $ref: "#/definitions/ErrorResponse"
 
-  #  get:
-  #   tags:
-  #     - "userDetails"
-  #   summary: "Get userDetails"
-  #   description: "Get userDetails"
+   get:
+    tags:
+      - "userDetails"
+    summary: "Get userDetails"
+    description: "Get userDetails"
 
-  #   x-swagger-router-controller: "userController"
-  #   operationId: getUserDetailsController
+    x-swagger-router-controller: "userController"
+    operationId: getUserDetailsController
 
-  #   consumes:
-  #     - "application/json"
-  #   produces:
-  #     - "application/json"
+    consumes:
+      - "application/json"
+    produces:
+      - "application/json"
 
-  #   parameters:
-  #     - in: query
-  #       name: email
-  #       type: string
-  #       required: false
-  #       description: email
-  #     - in: query
-  #       name: phone
-  #       type: string
-  #       required: false
-  #       description: phone
-  #   responses:
-  #     "200":
-  #       description: Success
-  #       schema:
-  #         $ref: "#/definitions/ApiResponse"
-  #     default:
-  #       description: error
-  #       schema:
-  #         $ref: "#/definitions/ErrorResponse"
+    parameters:
+      - in: query
+        name: searchKey
+        type: string
+        required: true
+        description: searchKey
+      # - in: query
+      #   name: phone
+      #   type: string
+      #   required: false
+      #   description: phone
+    responses:
+      "200":
+        description: Success
+        schema:
+          $ref: "#/definitions/ApiResponse"
+      default:
+        description: error
+        schema:
+          $ref: "#/definitions/ErrorResponse"
 
 
   /Provider:
