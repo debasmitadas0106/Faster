@@ -69,7 +69,7 @@ const getUserDetailsBusiness = async (payload, query) => {
 
 const updateUserDetailsBusiness = async (payload, query) => {
   const logger = new Logger(
-    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
+    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.UPDATE_USER}`
   );
   logger.debug(
     ` query || ${JSON.stringify(query)} || payload ||${JSON.stringify(
@@ -93,7 +93,7 @@ const updateUserDetailsBusiness = async (payload, query) => {
 
 const deleteUserDetailsBusiness = async (payload, query) => {
   const logger = new Logger(
-    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
+    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.DELETE_USER}`
   );
   logger.debug(` query || ${JSON.stringify(query)}`);
   try {

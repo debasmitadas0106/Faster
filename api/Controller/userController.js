@@ -58,7 +58,7 @@ const getUserDetailsController = async (req, res) => {
 
 const updateUserDetailsController = async (req, res) => {
   const logger = new Logger(
-    `${METHODS.ENTERING_TO}|| ${METHODS.CONTROLLER_METHOD} || ${METHODS.MODULES.USER.GET_USER}`
+    `${METHODS.ENTERING_TO}|| ${METHODS.CONTROLLER_METHOD} || ${METHODS.MODULES.USER.UPDATE_USER}`
   );
   logger.debug(
     ` body || ${JSON.stringify(req.body)} || query || ${JSON.stringify(
@@ -84,7 +84,7 @@ const updateUserDetailsController = async (req, res) => {
 
 const deleteUserDetailsController = async (req, res) => {
   const logger = new Logger(
-    `${METHODS.ENTERING_TO}|| ${METHODS.CONTROLLER_METHOD} || ${METHODS.MODULES.USER.GET_USER}`
+    `${METHODS.ENTERING_TO}|| ${METHODS.CONTROLLER_METHOD} || ${METHODS.MODULES.USER.DELETE_USER}`
   );
   logger.debug(
     ` body || ${JSON.stringify(req.body)} || query || ${JSON.stringify(

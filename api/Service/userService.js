@@ -43,7 +43,7 @@ const createUserService = async (data, dbUrl = "Faster") => {
 
 const updateUserService = async (condition, data, dbUrl = "Faster") => {
   const logger = new Logger(
-    `${METHODS.ENTERING_TO}|| ${METHODS.SERVICE_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
+    `${METHODS.ENTERING_TO}|| ${METHODS.SERVICE_METHOD} || ${METHODS.MODULES.USER.UPDATE_USER}`
   );
   logger.debug(
     `condition || ${JSON.stringify(condition)} || data || ${JSON.stringify(
@@ -65,7 +65,7 @@ const updateUserService = async (condition, data, dbUrl = "Faster") => {
 
 const deleteUserService = async (condition, dbUrl = "Faster") => {
   const logger = new Logger(
-    `${METHODS.ENTERING_TO}|| ${METHODS.SERVICE_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
+    `${METHODS.ENTERING_TO}|| ${METHODS.SERVICE_METHOD} || ${METHODS.MODULES.USER.DELETE_USER}`
   );
   logger.debug(`condition || ${JSON.stringify(condition)}}`);
   try {
