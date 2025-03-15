@@ -14,6 +14,8 @@ const METHODS = {
       CREATE_USER: "CREATE_USER",
       FIND_USER: "FIND_USER",
       GET_USER: "GET_USER",
+      DELETE_USER: "DELETE_USER",
+      UPDATE_USER: "UPDATE_USER"
     },
   },
 };
