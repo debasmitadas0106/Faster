@@ -24,13 +24,23 @@ const createUserDetailsBusiness = async (payload, query) => {
     });
     logger.debug(`getUser || ${JSON.stringify(getUser)}`);
     if (getUser) {
-      return getUser.userName === userName
-        ? "Username already exists"
-        : "Email already exists";
+      return apiResponse(
+        STATUS.BAD_REQUEST,
+        getUser.userName === userName
+          ? "Username already exists"
+          : "Email already exists",
+        "",
+        ""
+      );
     }
     const userDetails = await createUserService(dbPayload);
     logger.debug(`userDetails || ${JSON.stringify(userDetails)}`);
-    return apiResponse(STATUS.SUCCESS, "", "user created successfully", userDetails);
+    return apiResponse(
+      STATUS.SUCCESS,
+      "",
+      "user created successfully",
+      userDetails
+    );
   } catch (error) {
     logger.debug(`error || ${JSON.stringify(error)}`);
     console.log(error);
