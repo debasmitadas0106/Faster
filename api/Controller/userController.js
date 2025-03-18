@@ -1,5 +1,6 @@
 const { METHODS } = require("../../utils/constants");
 const Logger = require("../../utils/logger");
+const { response } = require("../../utils/response");
 const {
   createUserDetailsBusiness,
   getUserDetailsBusiness,
@@ -14,11 +15,7 @@ const createUserDetailsController = async (req, res) => {
   logger.debug(` req.body || ${req.body}`);
   try {
     const resp = await createUserDetailsBusiness(req.body, req.query);
-
-    return res.status(200).json({
-      success: true,
-      data: resp,
-    });
+    return res.status(resp.status).json(await response(resp));
   } catch (error) {
     logger.debug(`error || ${JSON.stringify(error)}`);
     console.error("Error in createEmployeeDetailsController:", error);
@@ -41,10 +38,7 @@ const getUserDetailsController = async (req, res) => {
   );
   try {
     const resp = await getUserDetailsBusiness(req.body, req.query);
-    return res.status(200).json({
-      success: true,
-      data: resp,
-    });
+    return res.status(resp.status).json(await response(resp));
   } catch (error) {
     console.error("Error in getUserDetailsController:", error);
     logger.debug(`error || ${JSON.stringify(error)}`);
