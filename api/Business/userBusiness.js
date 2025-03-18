@@ -5,12 +5,15 @@ const Logger = require("../../utils/logger");
 const {
   createUserService,
   findUserService,
+  updateUserService,
+  deleteUserService,
 } = require("../Service/userService");
 
 const createUserDetailsBusiness = async (payload, query) => {
   const logger = new Logger(
     `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
   );
+  logger.debug(` payload || ${JSON.stringify(payload)}`);
   try {
     let { userName, password, email } = payload;
     password = generateSHA256(password);
@@ -51,6 +54,7 @@ const getUserDetailsBusiness = async (payload, query) => {
   const logger = new Logger(
     `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
   );
+  logger.debug(` query || ${JSON.stringify(query)}`);
   try {
     let { searchKey } = query;
     logger.debug(`query || ${JSON.stringify(query)}`);
@@ -68,4 +72,52 @@ const getUserDetailsBusiness = async (payload, query) => {
   }
 };
 
-module.exports = { createUserDetailsBusiness, getUserDetailsBusiness };
+const updateUserDetailsBusiness = async (payload, query) => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.UPDATE_USER}`
+  );
+  logger.debug(
+    ` query || ${JSON.stringify(query)} || payload ||${JSON.stringify(
+      payload
+    )} `
+  );
+  try {
+    let { searchKey } = query;
+    let dbPayload = { ...payload };
+    let condition = {
+      $or: [{ userName: searchKey }, { email: searchKey }],
+    };
+    const userDetails = await updateUserService(condition, dbPayload);
+    logger.debug(`userDetails || ${JSON.stringify(userDetails)}`);
+    return apiResponse(STATUS.SUCCESS, "", "", userDetails);
+  } catch (error) {
+    logger.debug(`error || ${JSON.stringify(error)}`);
+    console.log(error);
+  }
+};
+
+const deleteUserDetailsBusiness = async (payload, query) => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.DELETE_USER}`
+  );
+  logger.debug(` query || ${JSON.stringify(query)}`);
+  try {
+    let { searchKey } = query;
+    let condition = {
+      $or: [{ userName: searchKey }, { email: searchKey }],
+    };
+    const userDetails = await deleteUserService(condition);
+    logger.debug(`userDetails || ${JSON.stringify(userDetails)}`);
+    return apiResponse(STATUS.SUCCESS, "", "", userDetails);
+  } catch (error) {
+    logger.debug(`error || ${JSON.stringify(error)}`);
+    console.log(error);
+  }
+};
+
+module.exports = {
+  createUserDetailsBusiness,
+  getUserDetailsBusiness,
+  updateUserDetailsBusiness,
+  deleteUserDetailsBusiness,
+};

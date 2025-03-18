@@ -4,6 +4,8 @@ const { response } = require("../../utils/response");
 const {
   createUserDetailsBusiness,
   getUserDetailsBusiness,
+  updateUserDetailsBusiness,
+  deleteUserDetailsBusiness,
 } = require("../Business/userBusiness");
 
 const createUserDetailsController = async (req, res) => {
@@ -38,7 +40,7 @@ const getUserDetailsController = async (req, res) => {
     const resp = await getUserDetailsBusiness(req.body, req.query);
     return res.status(resp.status).json(await response(resp));
   } catch (error) {
-    console.error("Error in createEmployeeDetailsController:", error);
+    console.error("Error in getUserDetailsController:", error);
     logger.debug(`error || ${JSON.stringify(error)}`);
     return res.status(500).json({
       success: false,
@@ -48,4 +50,61 @@ const getUserDetailsController = async (req, res) => {
   }
 };
 
-module.exports = { createUserDetailsController, getUserDetailsController };
+const updateUserDetailsController = async (req, res) => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.CONTROLLER_METHOD} || ${METHODS.MODULES.USER.UPDATE_USER}`
+  );
+  logger.debug(
+    ` body || ${JSON.stringify(req.body)} || query || ${JSON.stringify(
+      req.query
+    )}`
+  );
+  try {
+    const resp = await updateUserDetailsBusiness(req.body, req.query);
+    return res.status(200).json({
+      success: true,
+      data: resp,
+    });
+  } catch (error) {
+    console.error("Error in updateUserDetailsController:", error);
+    logger.debug(`error || ${JSON.stringify(error)}`);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+const deleteUserDetailsController = async (req, res) => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.CONTROLLER_METHOD} || ${METHODS.MODULES.USER.DELETE_USER}`
+  );
+  logger.debug(
+    ` body || ${JSON.stringify(req.body)} || query || ${JSON.stringify(
+      req.query
+    )}`
+  );
+  try {
+    const resp = await deleteUserDetailsBusiness(req.body, req.query);
+    return res.status(200).json({
+      success: true,
+      data: resp,
+    });
+  } catch (error) {
+    console.error("Error in deleteUserDetailsController:", error);
+    logger.debug(`error || ${JSON.stringify(error)}`);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = {
+  createUserDetailsController,
+  getUserDetailsController,
+  updateUserDetailsController,
+  deleteUserDetailsController,
+};
