@@ -34,7 +34,6 @@ const useremployeeSchema=new Schema(
     workphnumber:String,
     workaddress:String,
     StarRating:Number,
-    role:String,
     active:Boolean,
   },
   {

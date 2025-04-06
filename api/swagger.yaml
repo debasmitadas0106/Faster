@@ -189,8 +189,8 @@ paths:
         - "application/json"
       parameters:
         - in: query
-          name: searchkey
-          description: "get the account details"
+          name: email
+          description: "get the email account"
           required: true
           type: string
       responses:
@@ -289,8 +289,6 @@ definitions:
         type: string
       StarRating:
         type: number
-      role:
-        type: string
       active:
         type: boolean
 
@@ -316,8 +314,6 @@ definitions:
       lastSeen:
         type: string
       phone:
-        type: string
-      role:
         type: string
       active:
         type: boolean
