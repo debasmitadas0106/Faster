@@ -1,0 +1,19 @@
+const {findproviderService}=require('../Service/providerService');
+const jwt=require('jsonwebtoken');
+const dotenv=require('dotenv');
+dotenv.config()
+const SECRET_KEY=process.env.SECRET_KEY
+const generatelogintoken=async (username,password)=>{
+    userdetail=findproviderService(username);
+    if(userdetail && password==userdetail.password){
+        payload={user_id:userdetail._id,username:userdetail.username,role:userdetail.role}
+        console.log('payload',payload);
+        token=jwt.sign(payload,SECRET_KEY,{expiresIn:'1hr'})
+        return token
+    }
+    else{
+        return "username or password is wrong"
+    }
+}
+
+module.exports={generatelogintoken}
