@@ -43,16 +43,3 @@ const generatelogintoken = async (payload) => {
   }
 };
 module.exports = { generatelogintoken };
-let payload = {
-  userName: "debasmita",
-  password: "86ruahfjkds",
-};
-let userDetails = {
-  userId: "75623fj",
-  name: "Debasmita",
-  role: "Software Dev",
-  city: "Bengaluru",
-  state: "Karnataka",
-};
-
-let { userId, ...newUserDetails } = userDetails;
