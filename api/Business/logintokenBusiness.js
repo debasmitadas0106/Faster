@@ -5,41 +5,49 @@ const dotenv = require("dotenv");
 const Logger = require("../../utils/logger");
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY;
-const generatelogintoken1 = async (username, password) => {
-  let userdetail = findproviderService(username);
-  if (userdetail && password == userdetail.password) {
+
+const generatelogintoken = async (credentials) => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.GENERATELOGINTOKEN}`
+  );  try{
+  const username=credentials.username;
+  const password=credentials.password;
+  logger.debug(`tyhe username and password ${username},${password}`);
+  let userdetail = await findproviderService(
+    { $or: [{ username: username }, { email: username }] }
+  ); 
+  if (userdetail != null) {
+    if(password === userdetail.password){
     payload = {
       user_id: userdetail._id,
       username: userdetail.username,
       role: userdetail.role,
     };
-    console.log("payload", payload);
-    token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1hr" });
+    let token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1hr",algorithm:'HS256'});
     return token;
+  }
+  else{
+    return "password is wrong"
+  }
   } else {
-    return "username or password is wrong";
+    return "username is wrong";
   }
-};
+}
+catch(error){
+  logger.debug(` login failed || ${JSON.stringify(error)}`);
+}
+}
 
-const generatelogintoken = async (payload) => {
-  const logger = new Logger(
-    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
-  );
-  logger.debug(` query || ${JSON.stringify(query)}`);
-  try {
-    let { username, password } = payload;
-    logger.debug(`query || ${JSON.stringify(query)}`);
-    const userDetails = await findUserService({
-      $or: [{ userName: searchKey }, { email: searchKey }],
-    });
-    logger.debug(`userDetails || ${JSON.stringify(userDetails)}`);
-    if (!userDetails) {
-      return apiResponse(STATUS.NOT_FOUND, "User not found");
-    }
-    return apiResponse(STATUS.SUCCESS, "", "", userDetails);
-  } catch (error) {
-    logger.debug(`error || ${JSON.stringify(error)}`);
-    console.log(error);
+const verifyauthorisetoken=async(token)=>{
+  try{
+    let verification=jwt.verify(token,SECRET_KEY,{algorithms:['HS256']});
+    console.log(verification);
+    return verification;
   }
-};
-module.exports = { generatelogintoken };
+  catch(error){
+
+  }
+}
+
+module.exports={generatelogintoken,
+                verifyauthorisetoken};

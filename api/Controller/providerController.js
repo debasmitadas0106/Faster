@@ -1,6 +1,7 @@
 const { METHODS } = require("../../utils/constants");
 const Logger = require("../../utils/logger");
-const { response } = require("../../utils/response");
+const {response} = require("../../utils/response");
+const {generatelogintoken}=require("../Business/logintokenBusiness");
 const {
   createproviderBusiness,
   getproviderBusiness,
@@ -103,9 +104,26 @@ const updateprovidercontroller = async (req, res) => {
   }
 };
 
+const providerlogin= async (req,res)=>{
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.CONTROLLER_METHOD} || ${METHODS.MODULES.USER.UPDATE_USER}`
+  );
+  try{
+  const resp=await generatelogintoken(req.body);
+  console.log('resp after login = ',resp);
+  return res.status(200).json({
+    success: true,
+    data: resp,
+  });
+}catch(error){
+  logger.debug(`login failed: ${error}`);
+}
+}
+
 module.exports = {
   createprovidercontroller,
   getprovidercontroller,
   deleteprovidercontroller,
   updateprovidercontroller,
+  providerlogin,
 };

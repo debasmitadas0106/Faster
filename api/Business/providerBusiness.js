@@ -1,7 +1,7 @@
 const { apiResponse } = require("../../utils/apiResponse");
 const { METHODS, STATUS } = require("../../utils/constants");
 const Logger = require("../../utils/logger");
-const { generatelogintoken }=require("../Business/loginBusinessauthentication")
+const { generatelogintoken }=require("../Business/logintokenBusiness")
 const {
   findproviderService,
   createproviderservice,
@@ -49,9 +49,9 @@ const createproviderBusiness = async (payload, query) => {
 
 const getproviderBusiness = async (payload, query) => {
   const logger = new Logger(
-    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
+    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.GET_USER}`
   );
-  logger.debug(` query || ${JSON.stringify(query)}`);
+  logger.debug(` query in business || ${JSON.stringify(query)}`);
   try {
     // let { username, email } = payload;
     // const condition = {
@@ -60,12 +60,11 @@ const getproviderBusiness = async (payload, query) => {
     let {searchkey} = query;
     logger.debug(`searchkey in query || ${JSON.stringify(searchkey)}`);
     const condition = ({
-      $or: [{ userName: searchkey }, { email: searchkey }],
+      $or: [{ username: searchkey }, { email: searchkey }],
     });
-    // key=await generatelogintoken(condition.userName,password='surendra123')
-    logger.debug(`getproviderbussiness is ${JSON.stringify(condition)}`);
+    logger.debug(`getproviderbussiness is ${JSON.stringify(condition)} and username=${searchkey} then password ==${password}`);
     const getprovider = await findproviderService(condition);
-    // logger.debug(`getprovider || ${JSON.stringify(getprovider)} and the token==${key}`);
+    logger.debug(`getprovider || ${JSON.stringify(getprovider)} and the token==${key}`);
     if (!getprovider) {
       return apiResponse(STATUS.NOT_FOUND, "User not found");
     }
@@ -81,10 +80,8 @@ const deleteproviderBusiness = async (query) => {
     `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.DELETE_USER}`
   );
   logger.debug(` query || ${JSON.stringify(query)}`);
-  logger.debug(` query email== || ${JSON.stringify(query.email)}`);
-
   try {
-    let searchkey = query.email;
+    let {searchkey} = query;
     logger.debug(` searchkey== || ${JSON.stringify(searchkey)}`);
     let condition = {
       $or: [{ username: searchkey }, { email: searchkey }],

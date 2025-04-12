@@ -189,8 +189,8 @@ paths:
         - "application/json"
       parameters:
         - in: query
-          name: email
-          description: "get the email account"
+          name: searchkey
+          description: "searchkey"
           required: true
           type: string
       responses:
@@ -215,11 +215,11 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: email
+        - name: searchkey
           in: query
           required: true
           type: string
-          description: "email will be deleted"
+          description: "searchkey"
       responses:
         "200":
           description: Success
@@ -261,6 +261,36 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    
+  /login-authentication:
+    post:
+      tags:
+        - "login"
+      summary: "providerlogin"
+      description: "login for provider"
+      x-swagger-router-controller: "providerController"
+      operationId: "providerlogin"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: body
+          name: username
+          description: LoginCredentials
+          required: true
+          schema:
+            $ref: "#/definitions/loginapi"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema: 
+            $ref: "#/definitions/ErrorResponse"
+    
 
 definitions:
   SampleAPi:
@@ -319,6 +349,17 @@ definitions:
         type: string
       active:
         type: boolean
+
+  loginapi:
+    type: object
+    required:
+      - username
+      - password
+    properties:
+      username: 
+        type: string
+      password:
+        type: string
 
   ApiResponse:
     type: object

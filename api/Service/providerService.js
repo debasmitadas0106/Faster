@@ -1,4 +1,3 @@
-const { userSchema } = require("../../Schema/users");
 const { useremployeeSchema } = require("../../Schema/users");
 const dbConnect = require("../../utils/connectionSetup");
 const mongoose = require("mongoose");
@@ -12,10 +11,11 @@ const findproviderService = async (condition, dbURL = "Faster") => {
   logger.debug(`condition || ${JSON.stringify(condition)}`);
   try {
     const conn = await dbConnect(dbURL);
+    // logger.debug(`condition || ${JSON.stringify(condition)}`);
     const useremployeedetail = await conn
       .model("Providers", useremployeeSchema, "Providers")
       .findOne(condition);
-    logger.debug(`useremployeedetails==${useremployeedetail}`)
+    // logger.debug(`useremployeedetails of${JSON.stringify(condition)} ==${useremployeedetail}`)
     return useremployeedetail;
   } catch (error) {
     console.log(error);
