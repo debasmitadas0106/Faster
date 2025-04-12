@@ -1,7 +1,7 @@
 const { METHODS } = require("../../utils/constants");
 const Logger = require("../../utils/logger");
-const {response} = require("../../utils/response");
-const {generatelogintoken}=require("../Business/logintokenBusiness");
+const { response } = require("../../utils/response");
+const { generatelogintoken } = require("../Business/logintokenBusiness");
 const {
   createproviderBusiness,
   getproviderBusiness,
@@ -15,8 +15,8 @@ const createprovidercontroller = async (req, res) => {
   );
   logger.debug(` req.body || ${req.body}`);
   try {
-  const resp = await createproviderBusiness(req.body, req.query);
-  return res.status(resp.status).json(await response(resp));
+    const resp = await createproviderBusiness(req.body, req.query);
+    return res.status(resp.status).json(await response(resp));
   } catch (error) {
     logger.debug(`error || ${JSON.stringify(error)}`);
     console.error("Error in create provider controller:", error);
@@ -104,26 +104,33 @@ const updateprovidercontroller = async (req, res) => {
   }
 };
 
-const providerlogin= async (req,res)=>{
+const generateProviderLoginTokenController = async (req, res) => {
   const logger = new Logger(
-    `${METHODS.ENTERING_TO}|| ${METHODS.CONTROLLER_METHOD} || ${METHODS.MODULES.USER.UPDATE_USER}`
+    `${METHODS.ENTERING_TO}|| ${METHODS.CONTROLLER_METHOD} || ${METHODS.MODULES.USER.GET_USER}`
   );
-  try{
-  const resp=await generatelogintoken(req.body);
-  console.log('resp after login = ',resp);
-  return res.status(200).json({
-    success: true,
-    data: resp,
-  });
-}catch(error){
-  logger.debug(`login failed: ${error}`);
-}
-}
+  logger.debug(
+    ` body || ${JSON.stringify(req.body)} || query || ${JSON.stringify(
+      req.query
+    )}`
+  );
+  try {
+    const resp = await generatelogintoken(req.body);
+    return res.status(resp.status).json(await response(resp));
+  } catch (error) {
+    console.error("Error in getUserDetailsController:", error);
+    logger.debug(`error || ${JSON.stringify(error)}`);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
 
 module.exports = {
   createprovidercontroller,
   getprovidercontroller,
   deleteprovidercontroller,
   updateprovidercontroller,
-  providerlogin,
+  generateProviderLoginTokenController,
 };

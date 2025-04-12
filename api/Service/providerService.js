@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const { METHODS } = require("../../utils/constants");
 const Logger = require("../../utils/logger");
 
-const findproviderService = async (condition, dbURL = "Faster") => {
+const findproviderService = async (condition, attribute, dbURL = "Faster") => {
   const logger = new Logger(
     `${METHODS.ENTERING_TO}|| ${METHODS.SERVICE_METHOD} || ${METHODS.MODULES.USER.FIND_USER}`
   );
@@ -14,7 +14,8 @@ const findproviderService = async (condition, dbURL = "Faster") => {
     // logger.debug(`condition || ${JSON.stringify(condition)}`);
     const useremployeedetail = await conn
       .model("Providers", useremployeeSchema, "Providers")
-      .findOne(condition);
+      .findOne(condition)
+      .select(attribute);
     // logger.debug(`useremployeedetails of${JSON.stringify(condition)} ==${useremployeedetail}`)
     return useremployeedetail;
   } catch (error) {
