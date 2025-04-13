@@ -6,7 +6,7 @@ const Logger = require("../../utils/logger");
 const { apiResponse } = require("../../utils/apiResponse");
 const { findUserService } = require("../Service/userService");
 dotenv.config();
-const SECRET_KEY = process.env.SECRET_KEY;
+const SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 const generatelogintoken = async (credentials) => {
   const logger = new Logger(

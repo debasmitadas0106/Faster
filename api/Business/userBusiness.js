@@ -52,7 +52,7 @@ const createUserDetailsBusiness = async (payload, query) => {
 
 const getUserDetailsBusiness = async (payload, query) => {
   const logger = new Logger(
-    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
+    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.GET_USER}`
   );
   logger.debug(` query || ${JSON.stringify(query)}`);
   try {
