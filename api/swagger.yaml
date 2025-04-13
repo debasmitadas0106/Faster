@@ -9,144 +9,140 @@ schemes:
   - http
 
 paths:
-
   /userDetails:
+    post:
+      tags:
+        - "userDetails"
+      summary: "Create userDetails"
+      description: "Create userDetails"
 
-   post:
-    tags:
-      - "userDetails"
-    summary: "Create userDetails"
-    description: "Create userDetails"
+      x-swagger-router-controller: "userController"
+      operationId: createUserDetailsController
 
-    x-swagger-router-controller: "userController"
-    operationId: createUserDetailsController
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
 
-    consumes:
-      - "application/json"
-    produces:
-      - "application/json"
-
-    parameters:
+      parameters:
         - in: body
           name: body
           description: payload
           required: true
           schema:
             $ref: "#/definitions/userDetails"
-    responses:
-      "200":
-        description: Success
-        schema:
-          $ref: "#/definitions/ApiResponse"
-      default:
-        description: error
-        schema:
-          $ref: "#/definitions/ErrorResponse"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
-   get:
-    tags:
-      - "userDetails"
-    summary: "Get userDetails"
-    description: "Get userDetails"
+    get:
+      tags:
+        - "userDetails"
+      summary: "Get userDetails"
+      description: "Get userDetails"
 
-    x-swagger-router-controller: "userController"
-    operationId: getUserDetailsController
+      x-swagger-router-controller: "userController"
+      operationId: getUserDetailsController
 
-    consumes:
-      - "application/json"
-    produces:
-      - "application/json"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
 
-    parameters:
-      - in: query
-        name: searchKey
-        type: string
-        required: true
-        description: searchKey
-      # - in: query
-      #   name: phone
-      #   type: string
-      #   required: false
-      #   description: phone
-    responses:
-      "200":
-        description: Success
-        schema:
-          $ref: "#/definitions/ApiResponse"
-      default:
-        description: error
-        schema:
-          $ref: "#/definitions/ErrorResponse"
+      parameters:
+        - in: query
+          name: searchKey
+          type: string
+          required: true
+          description: searchKey
+        # - in: query
+        #   name: phone
+        #   type: string
+        #   required: false
+        #   description: phone
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
-   patch:
-    tags:
-      - "userDetails"
-    summary: "update userDetails"
-    description: "update userDetails"
+    patch:
+      tags:
+        - "userDetails"
+      summary: "update userDetails"
+      description: "update userDetails"
 
-    x-swagger-router-controller: "userController"
-    operationId: updateUserDetailsController
+      x-swagger-router-controller: "userController"
+      operationId: updateUserDetailsController
 
-    consumes:
-      - "application/json"
-    produces:
-      - "application/json"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
 
-    parameters:
-      - in: query
-        name: searchKey
-        type: string
-        required: true
-        description: searchKey
-      - in: body
-        name: body
-        description: payload
-        required: true
-        schema:
-          $ref: "#/definitions/userDetails"
-    responses:
-      "200":
-        description: Success
-        schema:
-          $ref: "#/definitions/ApiResponse"
-      default:
-        description: error
-        schema:
-          $ref: "#/definitions/ErrorResponse"
+      parameters:
+        - in: query
+          name: searchKey
+          type: string
+          required: true
+          description: searchKey
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/userDetails"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
-   delete:
-    tags:
-      - "userDetails"
-    summary: "delete userDetails"
-    description: "delete userDetails"
+    delete:
+      tags:
+        - "userDetails"
+      summary: "delete userDetails"
+      description: "delete userDetails"
 
-    x-swagger-router-controller: "userController"
-    operationId: deleteUserDetailsController
+      x-swagger-router-controller: "userController"
+      operationId: deleteUserDetailsController
 
-    consumes:
-      - "application/json"
-    produces:
-      - "application/json"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
 
-    parameters:
-      - in: query
-        name: searchKey
-        type: string
-        required: true
-        description: searchKey
-    responses:
-      "200":
-        description: Success
-        schema:
-          $ref: "#/definitions/ApiResponse"
-      default:
-        description: error
-        schema:
-          $ref: "#/definitions/ErrorResponse"
-
+      parameters:
+        - in: query
+          name: searchKey
+          type: string
+          required: true
+          description: searchKey
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /Provider:
-
     post:
       tags:
         - "provider"
@@ -174,7 +170,7 @@ paths:
             $ref: "#/definitions/ApiResponse"
         default:
           description: error
-          schema: 
+          schema:
             $ref: "#/definitions/ErrorResponse"
     get:
       tags:
@@ -189,8 +185,8 @@ paths:
         - "application/json"
       parameters:
         - in: query
-          name: email
-          description: "get the email account"
+          name: searchkey
+          description: "searchkey"
           required: true
           type: string
       responses:
@@ -215,11 +211,11 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: email
+        - name: searchkey
           in: query
           required: true
           type: string
-          description: "email will be deleted"
+          description: "searchkey"
       responses:
         "200":
           description: Success
@@ -262,6 +258,64 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /login/provider:
+    post:
+      tags:
+        - "login"
+      summary: "providerlogin"
+      description: "login for provider"
+      x-swagger-router-controller: "providerController"
+      operationId: "generateProviderLoginTokenController"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: body
+          name: username
+          description: LoginCredentials
+          required: true
+          schema:
+            $ref: "#/definitions/loginapi"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /login/user:
+    post:
+      tags:
+        - "login"
+      summary: "providerlogin"
+      description: "login for provider"
+      x-swagger-router-controller: "userController"
+      operationId: "generateUserTokenController"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: body
+          name: username
+          description: LoginCredentials
+          required: true
+          schema:
+            $ref: "#/definitions/loginapi"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
 definitions:
   SampleAPi:
     type: object
@@ -289,6 +343,8 @@ definitions:
         type: string
       StarRating:
         type: number
+      role:
+        type: string
       active:
         type: boolean
 
@@ -307,7 +363,7 @@ definitions:
         type: string
       userAddress:
         type: array
-        items: 
+        items:
           type: object
       location:
         type: object
@@ -317,6 +373,17 @@ definitions:
         type: string
       active:
         type: boolean
+
+  loginapi:
+    type: object
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+      password:
+        type: string
 
   ApiResponse:
     type: object

@@ -1,13 +1,22 @@
 const { useremployeeSchema } = require("../../Schema/users");
 const dbConnect = require("../../utils/connectionSetup");
 const mongoose = require("mongoose");
+const { METHODS } = require("../../utils/constants");
+const Logger = require("../../utils/logger");
 
-const findproviderService = async (condition, dbURL = "Faster") => {
+const findproviderService = async (condition, attribute, dbURL = "Faster") => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.SERVICE_METHOD} || ${METHODS.MODULES.USER.FIND_USER}`
+  );
+  logger.debug(`condition || ${JSON.stringify(condition)}`);
   try {
     const conn = await dbConnect(dbURL);
+    // logger.debug(`condition || ${JSON.stringify(condition)}`);
     const useremployeedetail = await conn
       .model("Providers", useremployeeSchema, "Providers")
-      .findOne(condition);
+      .findOne(condition)
+      .select(attribute);
+    // logger.debug(`useremployeedetails of${JSON.stringify(condition)} ==${useremployeedetail}`)
     return useremployeedetail;
   } catch (error) {
     console.log(error);
@@ -16,6 +25,10 @@ const findproviderService = async (condition, dbURL = "Faster") => {
 };
 
 const createproviderservice = async (data, dbURL = "Faster") => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.SERVICE_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
+  );
+  logger.debug(`data || ${JSON.stringify(data)}`);
   try {
     const conn = await dbConnect(dbURL);
     const useremployeedetail = await conn
@@ -29,6 +42,10 @@ const createproviderservice = async (data, dbURL = "Faster") => {
 };
 
 const deleteproviderservice = async (Data, dbURL = "Faster") => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.SERVICE_METHOD} || ${METHODS.MODULES.USER.DELETE_USER}`
+  );
+  logger.debug(`Data || ${JSON.stringify(Data)}}`);
   try {
     const conn = await dbConnect(dbURL);
     //console.log(JSON.stringify(Data));
@@ -56,6 +73,14 @@ const deleteproviderservice = async (Data, dbURL = "Faster") => {
 // };
 
 const updateproviderservice = async (condition, data, dbUrl = "Faster") => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.SERVICE_METHOD} || ${METHODS.MODULES.USER.UPDATE_USER}`
+  );
+  logger.debug(
+    `condition || ${JSON.stringify(condition)} || data || ${JSON.stringify(
+      data
+    )}`
+  );
   try {
     const conn = await dbConnect(dbUrl);
 
