@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const { VERIFY_BLACKLIST } = require("./constants");
 const { METHODS } = require("../utils/constants");
 const Logger = require("../utils/logger");
+const { findproviderService } = require("../api/Service/providerService");
 
 let verifyTokenMiddleware = async (req, res, next) => {
   const logger = new Logger(
@@ -22,16 +23,20 @@ let verifyTokenMiddleware = async (req, res, next) => {
   //console.log("token-->", token);
   const verified = jwt.verify(token, jwtSecretKey);
   //console.log(verified, "vvvvvvvvv-------->");
-
-  let userDetails = await findUserService({ _id: verified.userId });
-  logger.debug(` userDetals || ${JSON.stringify(userDetails)}`)
-  if (!userDetails) {
+  let clientDetails;
+  if (verified.role === "user") {
+    clientDetails = await findUserService({ _id: verified._id });
+  } else {
+    clientDetails = await findproviderService({ _id: verified._id });
+  }
+  logger.debug(` clientDetails || ${JSON.stringify(clientDetails)}`);
+  if (!clientDetails) {
     throw "invalid credentials";
   }
   req.user = {
     //db_name:req.headers.dbUrl, WILL SEND LATER AFTER ACCOUNT CREATION AFTER PASSING DBURL N THE HEADERS
-    userDetails: userDetails,
-    session_id: `${uuidv4()}_${verified.userId}`,
+    userDetails: clientDetails,
+    session_id: `${uuidv4()}_${verified._id}`,
   };
   next();
 };

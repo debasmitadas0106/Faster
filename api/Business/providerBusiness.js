@@ -18,6 +18,7 @@ const createproviderBusiness = async (payload, query) => {
     let { username, password, email } = payload;
     const dbpayload = {
       ...payload,
+      role:"provider"
     };
     logger.debug(`dbPayload || ${JSON.stringify(dbpayload)}`);
     const getprovider = await findproviderService({

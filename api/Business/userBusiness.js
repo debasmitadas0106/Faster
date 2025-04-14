@@ -20,6 +20,7 @@ const createUserDetailsBusiness = async (payload, query) => {
 
     const dbPayload = {
       ...payload,
+      role:"user"
     };
     logger.debug(`dbPayload || ${JSON.stringify(dbPayload)}`);
     const getUser = await findUserService({

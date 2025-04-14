@@ -27,7 +27,7 @@ const generatelogintoken = async (credentials) => {
     }
     const token = jwt.sign(
       {
-        userId: providerDetails._id,
+        _id: providerDetails._id,
         email: providerDetails.email,
         role: providerDetails.role,
       },
@@ -59,8 +59,9 @@ const generateUserlogintoken = async (credentials) => {
     }
     const token = jwt.sign(
       {
-        userId: userdetail._id,
+        _id: userdetail._id,
         email: userdetail.email,
+        role:userdetail.role
       },
       SECRET_KEY,
       { expiresIn: "1h" }
