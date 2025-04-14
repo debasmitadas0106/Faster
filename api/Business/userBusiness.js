@@ -20,6 +20,7 @@ const createUserDetailsBusiness = async (payload, query) => {
 
     const dbPayload = {
       ...payload,
+      role:"user"
     };
     logger.debug(`dbPayload || ${JSON.stringify(dbPayload)}`);
     const getUser = await findUserService({
@@ -52,7 +53,7 @@ const createUserDetailsBusiness = async (payload, query) => {
 
 const getUserDetailsBusiness = async (payload, query) => {
   const logger = new Logger(
-    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
+    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.GET_USER}`
   );
   logger.debug(` query || ${JSON.stringify(query)}`);
   try {

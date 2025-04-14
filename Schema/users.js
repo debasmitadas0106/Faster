@@ -12,6 +12,7 @@ const userSchema = new Schema(
     email: String,
     phone: String,
     password: String,
+    role: String,
     userAddress: [Object],
     location: Object,
     lastSeen: String,
@@ -22,24 +23,24 @@ const userSchema = new Schema(
   }
 );
 
-const useremployeeSchema=new Schema(
+const useremployeeSchema = new Schema(
   {
-    username:String,
-    firstname:String,
-    lastname:String,
-    email:String,
-    personalphnumber:String,
-    password:String,
-    personaladdress:String,
-    workphnumber:String,
-    workaddress:String,
-    StarRating:Number,
-    role:String,
-    active:Boolean,
+    username: String,
+    firstname: String,
+    lastname: String,
+    email: String,
+    personalphnumber: String,
+    password: String,
+    personaladdress: String,
+    workphnumber: String,
+    workaddress: String,
+    StarRating: Number,
+    role: String,
+    active: Boolean,
   },
   {
-    timestamps:true
+    timestamps: true,
   }
 );
 
-module.exports = {userSchema,useremployeeSchema};
+module.exports = { userSchema, useremployeeSchema };
