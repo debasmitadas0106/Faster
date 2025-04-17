@@ -56,6 +56,11 @@ paths:
         - "application/json"
 
       parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
         - in: query
           name: searchKey
           type: string

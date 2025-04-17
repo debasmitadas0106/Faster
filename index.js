@@ -9,22 +9,21 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const Redis = require("ioredis");
+const { verifyTokenMiddleware } = require("./middlewares/tokenVerify");
 
 dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: "*", // Allow requests from any origin or specify your frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Specify allowed HTTP methods
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
 );
 const serverPort = process.env.PORT || 5000;
 
-// Middleware setup
 app.use(express.json({ limit: "40mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-// Load Swagger YAML file
 const spec = fs.readFileSync(path.join(__dirname, "api/swagger.yaml"), "utf8");
 const swaggerDoc = jsyaml.load(spec);
 
@@ -33,11 +32,10 @@ const options = {
   controllers: path.join(__dirname, "./api/controller"), // Directory containing controllers
 };
 
-// Healthcheck endpoint
 app.get("/api/healthcheck", async (req, res) => {
-  // Implement your health check logic
   return res.status(200).send({ msg: "Everything working fine" });
 });
+app.use(verifyTokenMiddleware);
 
 swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
   app.use(middleware.swaggerMetadata());
