@@ -1,7 +1,7 @@
 const { METHODS } = require("../../utils/constants");
 const Logger = require("../../utils/logger");
 const { response } = require("../../utils/response");
-const { generatelogintoken } = require("../Business/logintokenBusiness");
+const { generatelogintoken,email_verify_generate_token } = require("../Business/logintokenBusiness");
 const {
   createproviderBusiness,
   getproviderBusiness,
@@ -16,6 +16,8 @@ const createprovidercontroller = async (req, res) => {
   logger.debug(` req.body || ${req.body}`);
   try {
     const resp = await createproviderBusiness(req.body, req.query);
+    console.debug(`the resp of thge creating provider ${resp}`)
+    email_verify_generate_token(resp);
     return res.status(resp.status).json(await response(resp));
   } catch (error) {
     logger.debug(`error || ${JSON.stringify(error)}`);

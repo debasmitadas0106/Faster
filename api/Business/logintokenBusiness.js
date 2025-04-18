@@ -72,16 +72,53 @@ const generateUserlogintoken = async (credentials) => {
   }
 };
 
-const verifyauthorisetoken = async (token) => {
-  try {
-    let verification = jwt.verify(token, SECRET_KEY, { algorithms: ["HS256"] });
-    console.log(verification);
-    return verification;
-  } catch (error) {}
-};
+const email_verify_generate_token=async (userregisterdetail) =>{
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}||  ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.GENERATE_LOGIN_TOKEN}`
+  );
+  try{
+    const {email,username}=userregisterdetail;
+    logger.debug(`email verifed ${username} and ${email}`)
+    const emailverifyingtoken=jwt.sign(
+      {
+        useremail:email,
+        username:username,
+        'purpose':'emailverification'
+    },SECRET_KEY,{expiresIn: "24h" });
+    logger.debug(`emailverifiyingtoken: ${emailverifyingtoken}`)
+    return emailverifyingtoken
+  }
+  catch(error){
+    logger.debug(` login failed || ${JSON.stringify(error)}`);
+  }
+}
+
+const emailverifiation=async(token)=>{
+  try{
+    const email_verification=jwt.verify(token,SECRET_KEY);
+    const {purpose}=email_verification
+    if(!email_verification && purpose==='emailverification'){
+      return 'user got confirmed'
+    }
+    else{
+      return 'token got expired'
+    }
+  }catch(error){
+
+  }
+}
+  // const verifyauthorisetoken = async (token) => {
+//   try {
+//     let verification = jwt.verify(token, SECRET_KEY, { algorithms: ["HS256"] });
+//     console.log(verification);
+//     return verification;
+//   } catch (error) {}
+// };
+
 
 module.exports = {
   generatelogintoken,
-  verifyauthorisetoken,
+  email_verify_generate_token,
+  emailverifiation,
   generateUserlogintoken,
 };
