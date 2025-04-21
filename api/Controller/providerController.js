@@ -1,7 +1,7 @@
 const { METHODS } = require("../../utils/constants");
 const Logger = require("../../utils/logger");
 const { response } = require("../../utils/response");
-const { generatelogintoken,email_verify_generate_token } = require("../Business/logintokenBusiness");
+const { generatelogintoken,emailverifiation,email_verify_generate_token } = require("../Business/logintokenBusiness");
 const {
   createproviderBusiness,
   getproviderBusiness,
@@ -16,8 +16,6 @@ const createprovidercontroller = async (req, res) => {
   logger.debug(` req.body || ${req.body}`);
   try {
     const resp = await createproviderBusiness(req.body, req.query);
-    console.debug(`the resp of thge creating provider ${resp}`)
-    email_verify_generate_token(resp);
     return res.status(resp.status).json(await response(resp));
   } catch (error) {
     logger.debug(`error || ${JSON.stringify(error)}`);
@@ -41,6 +39,7 @@ const getprovidercontroller = async (req, res) => {
   );
   try {
     const resp = await getproviderBusiness(req.query, req.query);
+    emailverifiation("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdXJwb3NlIjoiZW1haWx2ZXJpZmljYXRpb24iLCJpYXQiOjE3NDUyMjYxMjUsImV4cCI6MTc0NTMxMjUyNX0.cML9qn1nFp1HpS6nZNCallp4PVDby2k9Qu3H2XH8bXk")
     return res.status(resp.status).json(await response(resp));
   } catch (error) {
     console.error("Error in get provider controller:", error);

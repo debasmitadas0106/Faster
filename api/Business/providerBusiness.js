@@ -1,7 +1,7 @@
 const { apiResponse } = require("../../utils/apiResponse");
 const { METHODS, STATUS } = require("../../utils/constants");
 const Logger = require("../../utils/logger");
-const { generatelogintoken }=require("../Business/logintokenBusiness")
+const {email_verify_generate_token}=require("../Business/logintokenBusiness")
 const {
   findproviderService,
   createproviderservice,
@@ -13,22 +13,23 @@ const createproviderBusiness = async (payload, query) => {
   const logger = new Logger(
     `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
   );
-  logger.debug(` payload || ${JSON.stringify(payload)}`);
+  // logger.debug(` payload || ${JSON.stringify(payload)}`);
   try {
     let { username, password, email } = payload;
     const dbpayload = {
       ...payload,
       role:"provider"
     };
-    logger.debug(`dbPayload || ${JSON.stringify(dbpayload)}`);
+    // logger.debug(`dbPayload || ${JSON.stringify(dbpayload)}`);
     const getprovider = await findproviderService({
       $or: [{ username }, { email }],
     });
     logger.debug(`getprovider || ${JSON.stringify(getprovider)}`);
     if (getprovider) {
+      console.log('in th get provider....');
       return apiResponse(
         STATUS.BAD_REQUEST,
-        getUser.userName === userName
+        getprovider.username === username
           ? "Username already exists"
           : "Email already exists",
         "",
@@ -36,6 +37,7 @@ const createproviderBusiness = async (payload, query) => {
       );
     }
     const userDetails = await createproviderservice(dbpayload);
+    email_verify_generate_token(resp);
     logger.debug(`createuserDetails || ${JSON.stringify(userDetails)}`);
     return apiResponse(
       STATUS.SUCCESS,
@@ -54,18 +56,14 @@ const getproviderBusiness = async (payload, query) => {
   );
   logger.debug(` query in business || ${JSON.stringify(query)}`);
   try {
-    // let { username, email } = payload;
-    // const condition = {
-    //   $or: [{ username }, { email }],
-    // };
     let {searchkey} = query;
     logger.debug(`searchkey in query || ${JSON.stringify(searchkey)}`);
     const condition = ({
       $or: [{ username: searchkey }, { email: searchkey }],
     });
-    logger.debug(`getproviderbussiness is ${JSON.stringify(condition)} and username=${searchkey} then password ==${password}`);
+    
     const getprovider = await findproviderService(condition);
-    logger.debug(`getprovider || ${JSON.stringify(getprovider)} and the token==${key}`);
+    logger.debug(`getprovider || ${JSON.stringify(getprovider)}`);
     if (!getprovider) {
       return apiResponse(STATUS.NOT_FOUND, "User not found");
     }
@@ -87,13 +85,6 @@ const deleteproviderBusiness = async (query) => {
     let condition = {
       $or: [{ username: searchkey }, { email: searchkey }],
     };
-    // let { username, email } = payload;
-    // const dbPayload = {
-    //   ...payload,
-    // };
-    // const deleteprovider=await findproviderService({
-    //     $or:[(username),{email}],
-    // });
     logger.debug(`condition == || ${JSON.stringify(condition)}`);
     const providerdetails = await deleteproviderservice(condition);
     logger.debug(`providerDetails || ${JSON.stringify(providerdetails)}`);

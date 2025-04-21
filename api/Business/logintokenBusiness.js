@@ -85,7 +85,7 @@ const email_verify_generate_token=async (userregisterdetail) =>{
         username:username,
         'purpose':'emailverification'
     },SECRET_KEY,{expiresIn: "24h" });
-    logger.debug(`emailverifiyingtoken: ${emailverifyingtoken}`)
+    logger.debug(`emailverifiyingtoken is sending....><: ${emailverifyingtoken}`)
     return emailverifyingtoken
   }
   catch(error){
@@ -97,7 +97,9 @@ const emailverifiation=async(token)=>{
   try{
     const email_verification=jwt.verify(token,SECRET_KEY);
     const {purpose}=email_verification
-    if(!email_verification && purpose==='emailverification'){
+    console.log('emailverification==',JSON.stringify(email_verification),email_verification.purpose)
+    if(email_verification && purpose==='emailverification'){
+      console.log('user got confirmed')
       return 'user got confirmed'
     }
     else{
