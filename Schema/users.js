@@ -11,6 +11,8 @@ const userSchema = new Schema(
     lastName: String,
     email: String,
     phone: String,
+    token: String,
+    verified: Boolean,
     password: String,
     role: String,
     userAddress: [Object],
@@ -36,6 +38,7 @@ const useremployeeSchema = new Schema(
     workaddress: String,
     StarRating: Number,
     role: String,
+    token: String,
     active: Boolean,
   },
   {

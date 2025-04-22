@@ -348,8 +348,6 @@ definitions:
         type: string
       StarRating:
         type: number
-      role:
-        type: string
       active:
         type: boolean
 

@@ -1,32 +1,35 @@
 const { apiResponse } = require("../../utils/apiResponse");
 const { METHODS, STATUS } = require("../../utils/constants");
 const Logger = require("../../utils/logger");
-const {email_verify_generate_token}=require("../Business/logintokenBusiness")
+const {
+  email_verify_generate_token,
+} = require("../Business/logintokenBusiness");
 const {
   findproviderService,
   createproviderservice,
   deleteproviderservice,
   updateproviderservice,
 } = require("../Service/providerService");
+const { v4: uuidv4 } = require("uuid");
 
 const createproviderBusiness = async (payload, query) => {
   const logger = new Logger(
     `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
   );
-  // logger.debug(` payload || ${JSON.stringify(payload)}`);
+  logger.debug(` payload || ${JSON.stringify(payload)}`);
   try {
     let { username, password, email } = payload;
     const dbpayload = {
       ...payload,
-      role:"provider"
+      role: "provider",
+      token: uuidv4(),
     };
-    // logger.debug(`dbPayload || ${JSON.stringify(dbpayload)}`);
+    logger.debug(`dbPayload || ${JSON.stringify(dbpayload)}`);
     const getprovider = await findproviderService({
       $or: [{ username }, { email }],
     });
     logger.debug(`getprovider || ${JSON.stringify(getprovider)}`);
     if (getprovider) {
-      console.log('in th get provider....');
       return apiResponse(
         STATUS.BAD_REQUEST,
         getprovider.username === username
@@ -37,15 +40,16 @@ const createproviderBusiness = async (payload, query) => {
       );
     }
     const userDetails = await createproviderservice(dbpayload);
-    email_verify_generate_token(resp);
+
     logger.debug(`createuserDetails || ${JSON.stringify(userDetails)}`);
     return apiResponse(
       STATUS.SUCCESS,
       "",
       "user created successfully",
       userDetails
-    );  } catch (error) {
-      logger.debug(`error || ${JSON.stringify(error)}`);
+    );
+  } catch (error) {
+    logger.debug(`error || ${JSON.stringify(error)}`);
     console.log(error);
   }
 };
@@ -56,12 +60,12 @@ const getproviderBusiness = async (payload, query) => {
   );
   logger.debug(` query in business || ${JSON.stringify(query)}`);
   try {
-    let {searchkey} = query;
+    let { searchkey } = query;
     logger.debug(`searchkey in query || ${JSON.stringify(searchkey)}`);
-    const condition = ({
+    const condition = {
       $or: [{ username: searchkey }, { email: searchkey }],
-    });
-    
+    };
+
     const getprovider = await findproviderService(condition);
     logger.debug(`getprovider || ${JSON.stringify(getprovider)}`);
     if (!getprovider) {
@@ -80,7 +84,7 @@ const deleteproviderBusiness = async (query) => {
   );
   logger.debug(` query || ${JSON.stringify(query)}`);
   try {
-    let {searchkey} = query;
+    let { searchkey } = query;
     logger.debug(` searchkey== || ${JSON.stringify(searchkey)}`);
     let condition = {
       $or: [{ username: searchkey }, { email: searchkey }],
