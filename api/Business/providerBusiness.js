@@ -1,14 +1,14 @@
 const { apiResponse } = require("../../utils/apiResponse");
 const { METHODS, STATUS } = require("../../utils/constants");
 const Logger = require("../../utils/logger");
-const {
-  email_verify_generate_token,
+const { 
+  generateemailverify,
 } = require("../Business/logintokenBusiness");
 const {
   findproviderService,
   createproviderservice,
   deleteproviderservice,
-  updateproviderservice,
+  updateproviderservice,createaccountservice
 } = require("../Service/providerService");
 const { v4: uuidv4 } = require("uuid");
 
@@ -40,7 +40,7 @@ const createproviderBusiness = async (payload, query) => {
       );
     }
     const userDetails = await createproviderservice(dbpayload);
-
+    await generateemailverify(userDetails);
     logger.debug(`createuserDetails || ${JSON.stringify(userDetails)}`);
     return apiResponse(
       STATUS.SUCCESS,
@@ -129,9 +129,37 @@ const updateproviderBusiness = async (payload, query) => {
   }
 };
 
+const createaccountBusiness = async (payload) => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.CREATE_USER}`
+  );
+  logger.debug(` payload || ${JSON.stringify(payload)}`);
+  try {
+    let { username, email } = payload;
+    const dbpayload = {
+      ...payload,
+      role: "provider",
+      token: uuidv4(),
+    };
+    logger.debug(`dbPayload || ${JSON.stringify(dbpayload)}`);
+    const userDetails = await createaccountservice(dbpayload);
+    logger.debug(`createuserDetails || ${JSON.stringify(userDetails)}`);
+    return apiResponse(
+      STATUS.SUCCESS,
+      "",
+      "Account created successfully",
+      userDetails
+    );
+  } catch (error) {
+    logger.debug(`error || ${JSON.stringify(error)}`);
+    console.log(error);
+  }
+};
+
 module.exports = {
   createproviderBusiness,
   getproviderBusiness,
   deleteproviderBusiness,
   updateproviderBusiness,
+  createaccountBusiness
 };
