@@ -349,6 +349,36 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /user/verify-email:
+    post:
+      tags:
+        - "Email Verify"
+      summary: "providerlogin"
+      description: "login for provider"
+      x-swagger-router-controller: "verifyEmailController"
+      operationId: "verifyUserEmailController"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: body
+          name: body
+          description: email token
+          required: true
+          schema:
+            $ref: "#/definitions/emailVerify"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+
 definitions:
   SampleAPi:
     type: object
@@ -409,6 +439,12 @@ definitions:
         type: string
       password:
         type: string
+
+  emailVerify:
+    type: object
+    properties:
+      token:
+        type: string   
 
   ApiResponse:
     type: object

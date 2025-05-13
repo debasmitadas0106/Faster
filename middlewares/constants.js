@@ -10,7 +10,9 @@ let VERIFY_BLACKLIST = [
   "/api/login/provider",
   "/api/login/user",
   "/api/user",
-  "/api/provider"
+  "/api/provider",
+  "/api/user/verify-email",
+  "/api/provider/verify-email",
 ];
 module.exports = {
   VERIFY_BLACKLIST,

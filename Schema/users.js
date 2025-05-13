@@ -15,8 +15,11 @@ const userSchema = new Schema(
     role: String,
     userAddress: [Object],
     location: Object,
+    accountId: ObjectId,
     lastSeen: String,
     active: Boolean,
+    access: String,
+    token: String,
   },
   {
     timestamps: true,
@@ -36,8 +39,10 @@ const useremployeeSchema = new Schema(
     workaddress: String,
     StarRating: Number,
     role: String,
+    accountId: ObjectId,
     active: Boolean,
     lastSeen: String,
+    token: String,
   },
   {
     timestamps: true,
