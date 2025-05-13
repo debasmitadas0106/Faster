@@ -1,7 +1,7 @@
 const { apiResponse } = require("../../utils/apiResponse");
 const { METHODS, STATUS } = require("../../utils/constants");
 const Logger = require("../../utils/logger");
-const { generatelogintoken }=require("../Business/logintokenBusiness")
+const { generatelogintoken } = require("../Business/logintokenBusiness");
 const {
   findproviderService,
   createproviderservice,
@@ -18,7 +18,8 @@ const createproviderBusiness = async (payload, query) => {
     let { username, password, email } = payload;
     const dbpayload = {
       ...payload,
-      role:"provider"
+      role: "provider",
+      active: true,
     };
     logger.debug(`dbPayload || ${JSON.stringify(dbpayload)}`);
     const getprovider = await findproviderService({
@@ -42,8 +43,9 @@ const createproviderBusiness = async (payload, query) => {
       "",
       "user created successfully",
       userDetails
-    );  } catch (error) {
-      logger.debug(`error || ${JSON.stringify(error)}`);
+    );
+  } catch (error) {
+    logger.debug(`error || ${JSON.stringify(error)}`);
     console.log(error);
   }
 };
@@ -58,14 +60,20 @@ const getproviderBusiness = async (payload, query) => {
     // const condition = {
     //   $or: [{ username }, { email }],
     // };
-    let {searchkey} = query;
+    let { searchkey } = query;
     logger.debug(`searchkey in query || ${JSON.stringify(searchkey)}`);
-    const condition = ({
+    const condition = {
       $or: [{ username: searchkey }, { email: searchkey }],
-    });
-    logger.debug(`getproviderbussiness is ${JSON.stringify(condition)} and username=${searchkey} then password ==${password}`);
+    };
+    logger.debug(
+      `getproviderbussiness is ${JSON.stringify(
+        condition
+      )} and username=${searchkey} then password ==${password}`
+    );
     const getprovider = await findproviderService(condition);
-    logger.debug(`getprovider || ${JSON.stringify(getprovider)} and the token==${key}`);
+    logger.debug(
+      `getprovider || ${JSON.stringify(getprovider)} and the token==${key}`
+    );
     if (!getprovider) {
       return apiResponse(STATUS.NOT_FOUND, "User not found");
     }
@@ -82,7 +90,7 @@ const deleteproviderBusiness = async (query) => {
   );
   logger.debug(` query || ${JSON.stringify(query)}`);
   try {
-    let {searchkey} = query;
+    let { searchkey } = query;
     logger.debug(` searchkey== || ${JSON.stringify(searchkey)}`);
     let condition = {
       $or: [{ username: searchkey }, { email: searchkey }],

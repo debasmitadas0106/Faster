@@ -147,7 +147,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /Provider:
+  /providerDetails:
     post:
       tags:
         - "provider"
@@ -348,10 +348,6 @@ definitions:
         type: string
       StarRating:
         type: number
-      role:
-        type: string
-      active:
-        type: boolean
 
   userDetails:
     type: object
@@ -372,12 +368,8 @@ definitions:
           type: object
       location:
         type: object
-      lastSeen:
-        type: string
       phone:
         type: string
-      active:
-        type: boolean
 
   loginapi:
     type: object

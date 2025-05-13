@@ -72,16 +72,9 @@ const generateUserlogintoken = async (credentials) => {
   }
 };
 
-const verifyauthorisetoken = async (token) => {
-  try {
-    let verification = jwt.verify(token, SECRET_KEY, { algorithms: ["HS256"] });
-    console.log(verification);
-    return verification;
-  } catch (error) {}
-};
+
 
 module.exports = {
   generatelogintoken,
-  verifyauthorisetoken,
   generateUserlogintoken,
 };

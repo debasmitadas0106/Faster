@@ -37,6 +37,7 @@ const useremployeeSchema = new Schema(
     StarRating: Number,
     role: String,
     active: Boolean,
+    lastSeen: String,
   },
   {
     timestamps: true,
