@@ -29,7 +29,7 @@ const createproviderBusiness = async (payload, query) => {
     if (getprovider) {
       return apiResponse(
         STATUS.BAD_REQUEST,
-        getUser.userName === userName
+        getUser.username === username
           ? "Username already exists"
           : "Email already exists",
         "",
@@ -68,11 +68,11 @@ const getproviderBusiness = async (payload, query) => {
     logger.debug(
       `getproviderbussiness is ${JSON.stringify(
         condition
-      )} and username=${searchkey} then password ==${password}`
+      )} and username=${searchkey}`
     );
     const getprovider = await findproviderService(condition);
     logger.debug(
-      `getprovider || ${JSON.stringify(getprovider)} and the token==${key}`
+      `getprovider || ${JSON.stringify(getprovider)}`
     );
     if (!getprovider) {
       return apiResponse(STATUS.NOT_FOUND, "User not found");
