@@ -1,5 +1,5 @@
 const { findUserService } = require("../api/Service/userService");
-const { v4: uuidv4 } = require("uuid");
+// const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const { VERIFY_BLACKLIST } = require("./constants");
 const { METHODS } = require("../utils/constants");
@@ -12,11 +12,12 @@ let verifyTokenMiddleware = async (req, res, next) => {
   );
   let jwtSecretKey = process.env.JWT_SECRET_KEY;
   if (VERIFY_BLACKLIST.includes(req.url)) {
-    console.log("bypass token verification");
+    console.log("bypass token verification",req.url);
     return next();
   }
   let token = req.headers.authorization;
   if (!token || !token.startsWith("Bearer")) {
+    console.log('req.url of the ',req.url);
     return res.status(401).json({ msg: "Please pass correct token" });
   }
   token = token.slice(7);

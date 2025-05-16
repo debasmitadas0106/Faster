@@ -8,6 +8,7 @@ const {
   updateUserService,
   deleteUserService,
 } = require("../Service/userService");
+const { v4: uuidv4 } = require("uuid");
 
 const createUserDetailsBusiness = async (payload, query) => {
   const logger = new Logger(
@@ -20,8 +21,13 @@ const createUserDetailsBusiness = async (payload, query) => {
 
     const dbPayload = {
       ...payload,
+
+      role: "user",
+      token: uuidv4(),
+
       role:"user",
       active: true
+
     };
     logger.debug(`dbPayload || ${JSON.stringify(dbPayload)}`);
     const getUser = await findUserService({
