@@ -9,7 +9,7 @@ schemes:
   - http
 
 paths:
-  /userDetails:
+  /user:
     post:
       tags:
         - "userDetails"
@@ -41,6 +41,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /userDetails:
     get:
       tags:
         - "userDetails"
@@ -96,6 +97,11 @@ paths:
         - "application/json"
 
       parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
         - in: query
           name: searchKey
           type: string
@@ -132,6 +138,11 @@ paths:
         - "application/json"
 
       parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
         - in: query
           name: searchKey
           type: string
@@ -147,7 +158,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /Provider:
+  /provider:
     post:
       tags:
         - "provider"
@@ -177,6 +188,8 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/ErrorResponse"
+
+  /providerDetails:
     get:
       tags:
         - "provider"
@@ -189,6 +202,11 @@ paths:
       produces:
         - "application/json"
       parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
         - in: query
           name: searchkey
           description: "searchkey"
@@ -216,6 +234,11 @@ paths:
       produces:
         - "application/json"
       parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
         - name: searchkey
           in: query
           required: true
@@ -242,6 +265,11 @@ paths:
       produces:
         - "application/json"
       parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
         - name: email
           in: query
           required: true
@@ -348,6 +376,7 @@ definitions:
         type: string
       StarRating:
         type: number
+
       active:
         type: boolean
 
@@ -370,12 +399,8 @@ definitions:
           type: object
       location:
         type: object
-      lastSeen:
-        type: string
       phone:
         type: string
-      active:
-        type: boolean
 
   loginapi:
     type: object

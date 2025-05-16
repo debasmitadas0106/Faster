@@ -40,6 +40,7 @@ const useremployeeSchema = new Schema(
     role: String,
     email_token: String,
     active: Boolean,
+    lastSeen: String,
   },
   {
     timestamps: true,

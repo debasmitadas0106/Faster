@@ -73,6 +73,7 @@ const generateUserlogintoken = async (credentials) => {
   }
 };
 
+
 const generateemailverify = async (payload) => {
   const logger = new Logger(
     `${METHODS.ENTERING_TO}||  ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.PROVIDER.GENERATE_LOGIN_TOKEN}`
@@ -131,6 +132,7 @@ const emailverified = async (payload) => {
     return verification;
   } catch (error) {}
 };
+
 
 module.exports = {
   generatelogintoken,
