@@ -25,8 +25,6 @@ const createUserDetailsBusiness = async (payload, query) => {
 
       role: "user",
       token: uuidv4(),
-
-      role:"user",
       active: true
 
     };
