@@ -12,7 +12,8 @@ let VERIFY_BLACKLIST = [
   "/api/Provider",
   "/api/Provider?searchkey=string",
   "/api/user",
-  "/api/provider"
+  "/api/provider",
+  "/api/user/verify-email"
 
 ];
 module.exports = {

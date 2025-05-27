@@ -1,10 +1,7 @@
 const { apiResponse } = require("../../utils/apiResponse");
 const { METHODS, STATUS } = require("../../utils/constants");
 const Logger = require("../../utils/logger");
-emailverify
-const { 
-  generateemailverify,
-} = require("../Business/logintokenBusiness");
+const { generateemailverify } = require("../Business/logintokenBusiness");
 
 const { generatelogintoken } = require("../Business/logintokenBusiness");
 
@@ -12,7 +9,8 @@ const {
   findproviderService,
   createproviderservice,
   deleteproviderservice,
-  updateproviderservice,createaccountservice
+  updateproviderservice,
+  createaccountservice,
 } = require("../Service/providerService");
 const { v4: uuidv4 } = require("uuid");
 
@@ -29,7 +27,6 @@ const createproviderBusiness = async (payload, query) => {
 
       token: uuidv4(),
       active: true,
-
     };
     logger.debug(`dbPayload || ${JSON.stringify(dbpayload)}`);
     const getprovider = await findproviderService({
@@ -40,8 +37,6 @@ const createproviderBusiness = async (payload, query) => {
       return apiResponse(
         STATUS.BAD_REQUEST,
         getprovider.username === username
-
-        getUser.username === username
           ? "Username already exists"
           : "Email already exists",
         "",
@@ -69,7 +64,6 @@ const getproviderBusiness = async (payload, query) => {
   );
   logger.debug(` query in business || ${JSON.stringify(query)}`);
   try {
-
     // let { username, email } = payload;
     // const condition = {
     //   $or: [{ username }, { email }],
@@ -82,16 +76,6 @@ const getproviderBusiness = async (payload, query) => {
 
     const getprovider = await findproviderService(condition);
     logger.debug(`getprovider || ${JSON.stringify(getprovider)}`);
-
-    logger.debug(
-      `getproviderbussiness is ${JSON.stringify(
-        condition
-      )} and username=${searchkey}`
-    );
-    const getprovider = await findproviderService(condition);
-    logger.debug(
-      `getprovider || ${JSON.stringify(getprovider)}`
-    );
 
     if (!getprovider) {
       return apiResponse(STATUS.NOT_FOUND, "User not found");
@@ -186,5 +170,5 @@ module.exports = {
   getproviderBusiness,
   deleteproviderBusiness,
   updateproviderBusiness,
-  createaccountBusiness
+  createaccountBusiness,
 };
