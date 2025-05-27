@@ -9,9 +9,8 @@ let VERIFY_BLACKLIST = [
   "/api/api-docs",
   "/api/login/provider",
   "/api/login/user",
-
   "/api/Provider",
-  "/api/Provider?searchkey=string"
+  "/api/Provider?searchkey=string",
   "/api/user",
   "/api/provider"
 
