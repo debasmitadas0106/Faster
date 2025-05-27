@@ -1,4 +1,5 @@
 const { useremployeeSchema } = require("../../Schema/users");
+const { AccountSchema } = require("../../Schema/Accounts");
 const dbConnect = require("../../utils/connectionSetup");
 const mongoose = require("mongoose");
 const { METHODS } = require("../../utils/constants");
@@ -101,9 +102,21 @@ const updateproviderservice = async (condition, data, dbUrl = "Faster") => {
   }
 };
 
+const createaccountservice=async (payload,dbURL="Faster")=>{
+  try{
+    const conn=await dbConnect(dbURL);
+    const createaccount=await conn.model("Account",AccountSchema,"Account");
+    const createemployeeaccount=await createaccount.create(payload);
+    return createemployeeaccount;
+  }catch(error){
+    throw error;
+  }
+}
+
 module.exports = {
   findproviderService,
   createproviderservice,
   deleteproviderservice,
   updateproviderservice,
+  createaccountservice
 };

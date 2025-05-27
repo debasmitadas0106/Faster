@@ -407,6 +407,9 @@ definitions:
       StarRating:
         type: number
 
+      active:
+        type: boolean
+
   userDetails:
     type: object
     properties:

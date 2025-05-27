@@ -1,4 +1,5 @@
 const { findproviderService } = require("../Service/providerService");
+const {createaccountBusiness}=require("../Business/providerBusiness");
 const { METHODS, STATUS } = require("../../utils/constants");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
@@ -61,7 +62,7 @@ const generateUserlogintoken = async (credentials) => {
       {
         _id: userdetail._id,
         email: userdetail.email,
-        role:userdetail.role
+        role: userdetail.role,
       },
       SECRET_KEY,
       { expiresIn: "1h" }
@@ -73,8 +74,68 @@ const generateUserlogintoken = async (credentials) => {
 };
 
 
+const generateemailverify = async (payload) => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}||  ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.PROVIDER.GENERATE_LOGIN_TOKEN}`
+  );
+  try {
+    const { username, email,email_token,role} = payload;
+    logger.debug(`username and password || ${username},${email}`);
+    let userdetail = await findUserService({
+      $or: [{ userName: username }, { email: username }],
+    });
+    logger.debug(`userdetails || ${JSON.stringify(userdetail)}`);
+    if (!userdetail) {
+      return apiResponse(STATUS.NOT_FOUND, "No user found");
+    }
+    const token = jwt.sign(
+      {
+        _id: userdetail._id,
+        email: userdetail.email,
+        email_token:userdetail.email_token,
+        role: userdetail.role,
+      },
+      SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+    console.log('the email verification token :',token)
+    emailverified(token);
+    return token
+  } catch (error) {
+    logger.debug(` login failed || ${JSON.stringify(error)}`);
+  }
+};
+
+const emailverified = async (payload) => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}||  ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.PROVIDER.CREATE_ACCOUNT}`
+  );
+  try {
+    let verification = jwt.verify(payload, SECRET_KEY);
+    const {role,email,username,email_token}=verification;
+    if (role=='provider'){
+    const userdetail=await findproviderService({username});
+
+    if(userdetail && email_token===userdetail.email_token){
+      payload={
+        username:username,
+        email:email,
+        role:role
+      }
+    createaccountBusiness(payload);
+    }
+    else{
+      return "error in email verification"
+    }}
+    console.log(verification);
+    createaccountBusiness;
+    return verification;
+  } catch (error) {}
+};
+
 
 module.exports = {
   generatelogintoken,
   generateUserlogintoken,
+  generateemailverify,emailverified
 };
