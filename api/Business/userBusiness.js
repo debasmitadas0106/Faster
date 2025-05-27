@@ -2,6 +2,7 @@ const { apiResponse } = require("../../utils/apiResponse");
 const { METHODS, STATUS } = require("../../utils/constants");
 const { generateSHA256 } = require("../../utils/encryption");
 const Logger = require("../../utils/logger");
+const crypto = require("crypto");
 const {
   createUserService,
   findUserService,
@@ -122,7 +123,16 @@ const deleteUserDetailsBusiness = async (payload, query) => {
     console.log(error);
   }
 };
-
+function generateSecureToken(length = 16) {
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const bytes = crypto.randomBytes(length);
+  let token = "";
+  for (let i = 0; i < length; i++) {
+    token += chars[bytes[i] % chars.length];
+  }
+  return token;
+}
 module.exports = {
   createUserDetailsBusiness,
   getUserDetailsBusiness,
