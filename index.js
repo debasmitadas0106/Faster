@@ -10,6 +10,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const Redis = require("ioredis");
 const { verifyTokenMiddleware } = require("./middlewares/tokenVerify");
+const { verifyDb } = require("./middlewares/verifyDatabase");
 
 dotenv.config();
 const app = express();
@@ -36,6 +37,7 @@ app.get("/api/healthcheck", async (req, res) => {
   return res.status(200).send({ msg: "Everything working fine" });
 });
 app.use(verifyTokenMiddleware);
+app.use(verifyDb)
 
 swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
   app.use(middleware.swaggerMetadata());
