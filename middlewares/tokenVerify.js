@@ -35,7 +35,7 @@ let verifyTokenMiddleware = async (req, res, next) => {
     throw "invalid credentials";
   }
   req.user = {
-    //db_name:req.headers.dbUrl, WILL SEND LATER AFTER ACCOUNT CREATION AFTER PASSING DBURL N THE HEADERS
+    db_name:req.headers.dbUrl,
     userDetails: clientDetails,
     session_id: `${uuidv4()}_${verified._id}`,
   };
