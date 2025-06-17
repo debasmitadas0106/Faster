@@ -13,9 +13,27 @@ let VERIFY_BLACKLIST = [
   "/api/Provider?searchkey=string",
   "/api/user",
   "/api/provider",
-  "/api/user/verify-email"
+  "/api/user/verify-email",
+];
 
+let VERIFY_DB_BLACKLIST = [
+  "/api/docs",
+  "/api/docs/",
+  "/api/docs/swagger-ui-standalone-preset.js",
+  "/api/docs/swagger-ui.css",
+  "/api/docs/swagger-ui-bundle.js",
+  "/api/docs/favicon-32x32.png",
+  "/api/docs/favicon-16x16.png",
+  "/api/api-docs",
+  "/api/login/provider",
+  "/api/login/user",
+  "/api/Provider",
+  "/api/Provider?searchkey=string",
+  "/api/user",
+  "/api/provider",
+  "/api/user/verify-email",
 ];
 module.exports = {
   VERIFY_BLACKLIST,
+  VERIFY_DB_BLACKLIST,
 };

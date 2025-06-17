@@ -43,6 +43,7 @@ const verifyUserEmailBusiness = async (payload, query) => {
     const userDBpayload = {
       userName: userDetails.userName,
       access: "admin",
+      userId: userDetails._id,
       lastSeen: new Date().toISOString(),
     };
     await createUserService(userDBpayload, dbName);

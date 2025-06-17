@@ -22,6 +22,7 @@ const userSchema = new Schema(
     active: Boolean,
     access: String,
     token: String,
+    userId: ObjectId
   },
   {
     timestamps: true,
