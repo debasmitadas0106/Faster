@@ -35,7 +35,7 @@ let verifyTokenMiddleware = async (req, res, next) => {
     throw "invalid credentials";
   }
   req.user = {
-    db_name: req.headers.dburl,
+    db_name: req.headers?.dburl || "",
     userDetails: clientDetails,
     session_id: `${uuidv4()}_${verified._id}`,
   };
