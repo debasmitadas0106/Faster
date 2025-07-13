@@ -1,7 +1,6 @@
 const { apiResponse } = require("../../utils/apiResponse");
 const { METHODS, STATUS } = require("../../utils/constants");
 const Logger = require("../../utils/logger");
-const { sampleService } = require("../Service/sampleApiService");
 
 const sampleBusiness = async (payload, query) => {
   const logger = new Logger(
