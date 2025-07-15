@@ -3,11 +3,18 @@ const { METHODS, STATUS } = require("../../utils/constants");
 const { generateSHA256 } = require("../../utils/encryption");
 const Logger = require("../../utils/logger");
 const { createAccountService } = require("../Service/accountService");
-const {findUserService,updateUserService,createUserService,} = require("../Service/userService");
-const {findproviderService,createproviderservice,updateproviderservice} = require("../Service/providerService");
-const jwt=require('jsonwebtoken');
-const nodemailer=require('nodemailer');
-
+const {
+  findUserService,
+  updateUserService,
+  createUserService,
+} = require("../Service/userService");
+const {
+  findproviderService,
+  createproviderservice,
+  updateproviderservice,
+} = require("../Service/providerService");
+const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 const verifyUserEmailBusiness = async (payload, query) => {
   const logger = new Logger(
@@ -63,37 +70,35 @@ const verifyProviderEmailBusiness = async (payload, query) => {
   );
   logger.debug(` payload || ${JSON.stringify(payload)}`);
   try {
-    let { username,email } = payload;
-    const userDetails=await findproviderService({
-      $or:[{username},{email}],
+    let { token } = payload;
+    const providerDetails = await findproviderService({
+      token: token,
     });
-    if(!userDetails){
-      return apiResponse(
-        STATUS.NOT_FOUND,
-        "user doesn't exist"
-      );
+    if (!providerDetails) {
+      return apiResponse(STATUS.NOT_FOUND, "user doesn't exist");
     }
-    const dbName=`Faster_provider_${userDetails._id}`
-    const accountpayload={
-      username:userDetails.username,
-      email:userDetails.email,
-      accountName:userDetails.accountName
-    }
-        const accountDetails = await createAccountService(accountPayload);
+    const dbName = `Faster_prov_${providerDetails._id}`;
+    const accountPayload = {
+      username: providerDetails.userName,
+      providerId: providerDetails._id,
+      email: providerDetails.email,
+      accountName: providerDetails.firstName,
+    };
+    const accountDetails = await createAccountService(accountPayload);
     const data = {
       token: "",
       $push: {
         accountId: accountDetails._id,
       },
     };
-    await updateproviderservice({ email: userDetails.email }, data);
-    const userDBpayload = {
-      userName: userDetails.userName,
+    await updateproviderservice({ email: providerDetails.email }, data);
+    const providerDBpayload = {
+      userName: providerDetails.userName,
       access: "admin",
-      userId: userDetails._id,
+      providerId: providerDetails._id,
       lastSeen: new Date().toISOString(),
     };
-    await createproviderservice(userDBpayload, dbName);
+    await createproviderservice(providerDBpayload, dbName);
     return apiResponse(
       STATUS.SUCCESS,
       "",
@@ -105,36 +110,41 @@ const verifyProviderEmailBusiness = async (payload, query) => {
   }
 };
 
-const transporter=nodemailer.createTransport({
-  service:'gmail',
-  auth:{
-    user:'',
-    pass:''
-  }
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "",
+    pass: "",
+  },
 });
 
-const generateemailtoken=async (payload)=>{
-  try{
-  const token= jwt.sign({email: 'allusurendra8@gmail.com',purpose:'emailtestverify'},'secretkey',{
-    expiresIn:'24h'
-  });
-  const url=``;
-  const mailOptions={
-    from:'',
-    to: '',
-    subject:'verifying email',
-    html: `<h2>Email Verification</h2>
+const generateemailtoken = async (payload) => {
+  try {
+    const token = jwt.sign(
+      { email: "allusurendra8@gmail.com", purpose: "emailtestverify" },
+      "secretkey",
+      {
+        expiresIn: "24h",
+      }
+    );
+    const url = ``;
+    const mailOptions = {
+      from: "",
+      to: "",
+      subject: "verifying email",
+      html: `<h2>Email Verification</h2>
            <p>Click the link below to verify your email:</p>
-           <a href="${url}">${url}</a>`
-  };
-  await transporter.sendMail(mailOptions);
-  console.log('verification email sended successfully');
-}catch(error){
-  console.log('error in sending email: ',error);
-}
-}
+           <a href="${url}">${url}</a>`,
+    };
+    await transporter.sendMail(mailOptions);
+    console.log("verification email sended successfully");
+  } catch (error) {
+    console.log("error in sending email: ", error);
+  }
+};
 
 module.exports = {
   verifyUserEmailBusiness,
-  verifyProviderEmailBusiness,generateemailtoken
+  verifyProviderEmailBusiness,
+  generateemailtoken,
 };

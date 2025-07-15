@@ -20,7 +20,7 @@ const createproviderBusiness = async (payload, query) => {
   );
   logger.debug(` payload || ${JSON.stringify(payload)}`);
   try {
-    let { username, password, email } = payload;
+    let { userName, password, email } = payload;
     const dbpayload = {
       ...payload,
       role: "provider",
@@ -30,13 +30,13 @@ const createproviderBusiness = async (payload, query) => {
     };
     logger.debug(`dbPayload || ${JSON.stringify(dbpayload)}`);
     const getprovider = await findproviderService({
-      $or: [{ username }, { email }],
+      $or: [{ userName }, { email }],
     });
     logger.debug(`getprovider || ${JSON.stringify(getprovider)}`);
     if (getprovider) {
       return apiResponse(
         STATUS.BAD_REQUEST,
-        getprovider.username === username
+        getprovider.userName === userName
           ? "Username already exists"
           : "Email already exists",
         "",
@@ -71,7 +71,7 @@ const getproviderBusiness = async (payload, query) => {
     let { searchkey } = query;
     logger.debug(`searchkey in query || ${JSON.stringify(searchkey)}`);
     const condition = {
-      $or: [{ username: searchkey }, { email: searchkey }],
+      $or: [{ userName: searchkey }, { email: searchkey }],
     };
 
     const getprovider = await findproviderService(condition);
@@ -96,7 +96,7 @@ const deleteproviderBusiness = async (query) => {
     let { searchkey } = query;
     logger.debug(` searchkey== || ${JSON.stringify(searchkey)}`);
     let condition = {
-      $or: [{ username: searchkey }, { email: searchkey }],
+      $or: [{ userName: searchkey }, { email: searchkey }],
     };
     logger.debug(`condition == || ${JSON.stringify(condition)}`);
     const providerdetails = await deleteproviderservice(condition);
@@ -144,7 +144,7 @@ const createaccountBusiness = async (payload) => {
   );
   logger.debug(` payload || ${JSON.stringify(payload)}`);
   try {
-    let { username, email } = payload;
+    let { userName, email } = payload;
     const dbpayload = {
       ...payload,
       role: "provider",
