@@ -31,9 +31,9 @@ const userSchema = new Schema(
 
 const useremployeeSchema = new Schema(
   {
-    username: String,
-    firstname: String,
-    lastname: String,
+    userName: String,
+    firstName: String,
+    lastName: String,
     email: String,
     personalphnumber: String,
     password: String,

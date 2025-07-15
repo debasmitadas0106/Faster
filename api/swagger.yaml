@@ -212,6 +212,11 @@ paths:
           type: string
           required: true
           description: auth_token
+        - in: header
+          name: dbUrl
+          type: string
+          required: true
+          description: db name
         - in: query
           name: searchkey
           description: "searchkey"
@@ -244,6 +249,11 @@ paths:
           type: string
           required: true
           description: auth_token
+        - in: header
+          name: dbUrl
+          type: string
+          required: true
+          description: db name
         - name: searchkey
           in: query
           required: true
@@ -275,6 +285,11 @@ paths:
           type: string
           required: true
           description: auth_token
+        - in: header
+          name: dbUrl
+          type: string
+          required: true
+          description: db name
         - name: email
           in: query
           required: true
@@ -329,7 +344,7 @@ paths:
     post:
       tags:
         - "login"
-      summary: "providerlogin"
+      summary: "Userlogin"
       description: "login for provider"
       x-swagger-router-controller: "userController"
       operationId: "generateUserTokenController"
@@ -383,6 +398,35 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /provider/verify-email:
+    post:
+      tags:
+        - "Email Verify"
+      summary: "providerlogin"
+      description: "login for provider"
+      x-swagger-router-controller: "verifyEmailController"
+      operationId: "verifyProviderEmailController"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: body
+          name: body
+          description: email token
+          required: true
+          schema:
+            $ref: "#/definitions/emailVerify"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
 
 definitions:
   SampleAPi:
@@ -391,11 +435,11 @@ definitions:
   provider:
     type: object
     properties:
-      username:
+      userName:
         type: string
-      firstname:
+      firstName:
         type: string
-      lastname:
+      lastName:
         type: string
       email:
         type: string

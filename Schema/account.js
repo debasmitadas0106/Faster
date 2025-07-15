@@ -11,6 +11,8 @@ const accountSchema = new Schema(
     accountName: String,
     fasterCoins: Number,
     email: String,
+    role: String,
+    providerId: ObjectId,
   },
   {
     timestamps: true,
