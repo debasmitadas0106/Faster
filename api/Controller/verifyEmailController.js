@@ -3,7 +3,7 @@ const Logger = require("../../utils/logger");
 const { response } = require("../../utils/response");
 const { generateUserlogintoken } = require("../Business/logintokenBusiness");
 const { createUserDetailsBusiness } = require("../Business/userBusiness");
-const { verifyUserEmailBusiness } = require("../Business/verifyEmailBusiness");
+const { verifyUserEmailBusiness,generateemailtoken } = require("../Business/verifyEmailBusiness");
 
 const verifyUserEmailController = async (req, res) => {
   const logger = new Logger(
@@ -30,7 +30,7 @@ const verifyProviderEmailController = async (req, res) => {
   );
   logger.debug(` req.body || ${req.body}`);
   try {
-    const resp = await createUserDetailsBusiness(req.body, req.query);
+    const resp = await generateemailtoken(req.body);
     return res.status(resp.status).json(await response(resp));
   } catch (error) {
     logger.debug(`error || ${JSON.stringify(error)}`);

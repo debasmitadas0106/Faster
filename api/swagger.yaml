@@ -212,6 +212,11 @@ paths:
           type: string
           required: true
           description: auth_token
+        - in: header
+          name: dbUrl
+          type: string
+          required: true
+          description: db name
         - in: query
           name: searchkey
           description: "searchkey"
@@ -244,6 +249,11 @@ paths:
           type: string
           required: true
           description: auth_token
+        - in: header
+          name: dbUrl
+          type: string
+          required: true
+          description: db name
         - name: searchkey
           in: query
           required: true
@@ -275,6 +285,11 @@ paths:
           type: string
           required: true
           description: auth_token
+        - in: header
+          name: dbUrl
+          type: string
+          required: true
+          description: db name
         - name: email
           in: query
           required: true
@@ -329,7 +344,7 @@ paths:
     post:
       tags:
         - "login"
-      summary: "providerlogin"
+      summary: "Userlogin"
       description: "login for provider"
       x-swagger-router-controller: "userController"
       operationId: "generateUserTokenController"

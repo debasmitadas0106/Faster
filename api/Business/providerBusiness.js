@@ -44,7 +44,7 @@ const createproviderBusiness = async (payload, query) => {
       );
     }
     const userDetails = await createproviderservice(dbpayload);
-    await generateemailverify(userDetails);
+    // await generateemailverify(userDetails);
     logger.debug(`createuserDetails || ${JSON.stringify(userDetails)}`);
     return apiResponse(
       STATUS.SUCCESS,
