@@ -1,5 +1,4 @@
 const { useremployeeSchema } = require("../../Schema/users");
-const { AccountSchema } = require("../../Schema/Accounts");
 const dbConnect = require("../../utils/connectionSetup");
 const mongoose = require("mongoose");
 const { METHODS } = require("../../utils/constants");
