@@ -37,7 +37,7 @@ app.get("/api/healthcheck", async (req, res) => {
   return res.status(200).send({ msg: "Everything working fine" });
 });
 app.use(verifyTokenMiddleware);
-app.use(verifyDb)
+//app.use(verifyDb)
 
 swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
   app.use(middleware.swaggerMetadata());
