@@ -1,5 +1,4 @@
 console.log("initiating faster with the blessings of Ma");
-console.log("i am the ceo bitch");
 const path = require("path");
 const http = require("http");
 const swaggerTools = require("swagger-tools");
