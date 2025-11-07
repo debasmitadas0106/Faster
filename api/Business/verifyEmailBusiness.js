@@ -110,36 +110,49 @@ const verifyProviderEmailBusiness = async (payload, query) => {
   }
 };
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "",
-    pass: "",
-  },
-});
-
 const generateemailtoken = async (payload) => {
   try {
-    const token = jwt.sign(
-      { email: "allusurendra8@gmail.com", purpose: "emailtestverify" },
-      "secretkey",
-      {
-        expiresIn: "24h",
-      }
-    );
-    const url = ``;
+const CLIENT_ID = '765309738906-i5r6kd3elqh8nekn2h9h8enj2vi84tv5.apps.googleusercontent.com';
+const CLIENT_SECRET = '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';
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground'; 
+// const REFRESH_TOKEN = 'YOUR_REFRESH_TOKEN'; // The Refresh Token you got from the playground
+
+const oAuth2Client = new google.auth.OAuth2(
+  CLIENT_ID,
+  CLIENT_SECRET,
+  REDIRECT_URI
+);
+// oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+    // To Get an access token
+    const accessToken = await oAuth2Client.getAccessToken();
+    const transport = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: 'fasterdevs@gmail.com',
+        clientId: 765309738906-i5r6kd3elqh8nekn2h9h8enj2vi84tv5.apps.googleusercontent.com,
+        clientSecret: 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,
+        //refreshToken: REFRESH_TOKEN,
+        accessToken: accessToken.token,
+      },
+    });
     const mailOptions = {
-      from: "",
-      to: "",
-      subject: "verifying email",
-      html: `<h2>Email Verification</h2>
-           <p>Click the link below to verify your email:</p>
-           <a href="${url}">${url}</a>`,
+      from: 'fasterdevs@gmail.com',
+      to: 'allusurendra8@gmail.com',
+      subject: 'Hello from Node.js using Gmail API',
+      text: 'This is a test email sent from a faster application!',
+      html: '<h1>Hello!</h1><p>This is a test email sent from a faster application!</p>',
     };
-    await transporter.sendMail(mailOptions);
-    console.log("verification email sended successfully");
-  } catch (error) {
-    console.log("error in sending email: ", error);
+
+    // Send the email
+    const result = await transport.sendMail(mailOptions);
+    console.log('Email sent successfully:', result);
+    return result;
+
+// Call the function to send the email
+// sendMail();
+  }catch(error){
+    throw error;
   }
 };
 

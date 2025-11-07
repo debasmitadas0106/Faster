@@ -7,9 +7,13 @@ const verifyDb = async (req, res, next) => {
   const logger = new Logger(
     `${METHODS.ENTERING_TO} || ${METHODS.VERIFY_DATABASE}}`
   );
-  if (VERIFY_DB_BLACKLIST.includes(req.url)) {
-    console.log("bypass database verification");
-    logger.debug("bypass database verification");
+  if (
+    req.url.startsWith("/api/docs/") ||
+    req.url.startsWith("/api") ||
+    VERIFY_DB_BLACKLIST.includes(req.url)
+  ) {
+    console.log("bypass database verification", req.url);
+    // logger.debug("bypass database verification");
     return next();
   }
   if (!req.user.db_name) {

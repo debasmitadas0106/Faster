@@ -11,13 +11,17 @@ let verifyTokenMiddleware = async (req, res, next) => {
     `${METHODS.ENTERING_TO} || ${METHODS.VERIFY_TOKEN}}`
   );
   let jwtSecretKey = process.env.JWT_SECRET_KEY;
-  if (VERIFY_BLACKLIST.includes(req.url)) {
+  if (
+    req.url.startsWith("/api/docs/") ||
+    req.url.startsWith("/api") ||
+    VERIFY_BLACKLIST.includes(req.url)
+  ) {
     console.log("bypass token verification", req.url);
     return next();
   }
   let token = req.headers.authorization;
   if (!token || !token.startsWith("Bearer")) {
-    console.log("req.url of the ", req.url);
+    console.log("asking the token to ", req.url);
     return res.status(401).json({ msg: "Please pass correct token" });
   }
   token = token.slice(7);

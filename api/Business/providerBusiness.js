@@ -1,9 +1,9 @@
 const { apiResponse } = require("../../utils/apiResponse");
 const { METHODS, STATUS } = require("../../utils/constants");
 const Logger = require("../../utils/logger");
-const { generateemailverify } = require("../Business/logintokenBusiness");
+// const { generateemailverify } = require("../Business/logintokenBusiness");
 
-const { generatelogintoken } = require("../Business/logintokenBusiness");
+// const { generatelogintoken } = require("../Business/logintokenBusiness");
 
 const {
   findproviderService,
