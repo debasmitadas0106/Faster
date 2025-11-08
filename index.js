@@ -29,7 +29,7 @@ const swaggerDoc = jsyaml.load(spec);
 
 // Swagger Router options
 const options = {
-  controllers: path.join(__dirname, "./api/controller"), // Directory containing controllers
+  controllers: path.join(__dirname, "./api/Controller"), // Directory containing controllers
 };
 
 app.get("/api/healthcheck", async (req, res) => {
