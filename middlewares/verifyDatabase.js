@@ -9,7 +9,6 @@ const verifyDb = async (req, res, next) => {
   );
   if (
     req.url.startsWith("/api/docs/") ||
-    req.url.startsWith("/api") ||
     VERIFY_DB_BLACKLIST.includes(req.url)
   ) {
     console.log("bypass database verification", req.url);

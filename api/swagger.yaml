@@ -3,7 +3,7 @@ info:
   title: Faster
   description: APIs for Faster services.
   version: 1.0.0
-host: localhost:8000
+host: faster-env.eba-abc123.eu-north-1.elasticbeanstalk.com
 basePath: /api
 schemes:
   - http
