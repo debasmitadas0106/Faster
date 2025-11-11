@@ -13,16 +13,16 @@ const { verifyDb } = require("./middlewares/verifyDatabase");
 
 dotenv.config();
 const app = express();
-app.enable("trust proxy");
+// app.enable("trust proxy");
 
-// 🛡️ Force HTTPS redirect (place BEFORE routes)
-app.use((req, res, next) => {
-  if (req.secure || req.headers["x-forwarded-proto"] === "https") {
-    next();
-  } else {
-    return res.redirect(`https://${req.headers.host}${req.url}`);
-  }
-});
+// // 🛡️ Force HTTPS redirect (place BEFORE routes)
+// app.use((req, res, next) => {
+//   if (req.secure || req.headers["x-forwarded-proto"] === "https") {
+//     next();
+//   } else {
+//     return res.redirect(`https://${req.headers.host}${req.url}`);
+//   }
+// });
 app.use(
   cors({
     origin: "*",
