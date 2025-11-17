@@ -424,6 +424,38 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /test-sample:
+    post:
+      tags:
+        - "sample tester API"
+      summary: "test sample API"
+      description: "test sample API"
+
+      x-swagger-router-controller: "sampleApiController"
+      operationId: sampleController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/SampleAPi"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
 
 definitions:
   SampleAPi:
@@ -473,8 +505,6 @@ definitions:
         type: array
         items:
           type: object
-      location:
-        type: object
       phone:
         type: string
 

@@ -13,6 +13,7 @@ let VERIFY_BLACKLIST = [
   "/api/user",
   "/api/user/verify-email",
   "/api/provider/verify-email",
+  "/api/test-sample",
 ];
 
 let VERIFY_DB_BLACKLIST = [
@@ -30,6 +31,7 @@ let VERIFY_DB_BLACKLIST = [
   "/api/user",
   "/api/user/verify-email",
   "/api/provider/verify-email",
+  "/api/test-sample",
 ];
 module.exports = {
   VERIFY_BLACKLIST,

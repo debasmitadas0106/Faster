@@ -25,6 +25,29 @@ const createAccountService = async (data, dbUrl = "Faster") => {
     throw error;
   }
 };
+const findAccountService = async (condition, dbUrl = "Faster") => {
+  const logger = new Logger(
+    `${METHODS.ENTERING_TO}|| ${METHODS.SERVICE_METHOD} || ${METHODS.MODULES.USER.FIND_USER}`
+  );
+  logger.debug(`condition || ${JSON.stringify(condition)}`);
+  try {
+    const conn = await dbConnect(dbUrl);
+
+    const accountDetails = await conn.model(
+      "Accounts",
+      accountSchema,
+      "Accounts"
+    );
+
+    const accountDetailsFind = await accountDetails.findOne(condition);
+    console.log(accountDetailsFind,"ssssssssssss")
+    return accountDetailsFind;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 module.exports = {
   createAccountService,
+  findAccountService,
 };
