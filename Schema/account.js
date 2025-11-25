@@ -8,6 +8,7 @@ const accountSchema = new Schema(
   {
     userName: String,
     userId: ObjectId,
+    dbName: String,
     accountName: String,
     fasterCoins: Number,
     email: String,
