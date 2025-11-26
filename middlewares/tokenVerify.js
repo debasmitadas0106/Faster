@@ -13,6 +13,7 @@ let verifyTokenMiddleware = async (req, res, next) => {
   let jwtSecretKey = process.env.JWT_SECRET_KEY;
   if (
     req.url.startsWith("/api/docs/") ||
+    req.url.startsWith("/api/oauth2callback") ||
     VERIFY_BLACKLIST.includes(req.url)
   ) {
     console.log("bypass token verification", req.url);

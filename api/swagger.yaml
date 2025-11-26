@@ -424,6 +424,37 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /oauth2callback:
+    get:
+      tags:
+        - "google OAuth"
+      summary: "Create google auth details"
+      description: "Create google auth details"
+
+      x-swagger-router-controller: "googleAuthController"
+      operationId: googleAuthCallbackController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: query
+          name: code
+          type: string
+          required: true
+          description: code
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
   /test-sample:
     post:
       tags:
