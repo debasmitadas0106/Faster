@@ -7,6 +7,7 @@ const Logger = require("../../utils/logger");
 const { apiResponse } = require("../../utils/apiResponse");
 const { findUserService } = require("../Service/userService");
 const { findAccountService } = require("../Service/accountService");
+const { generateSHA256 } = require("../../utils/encryption");
 dotenv.config();
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
 
@@ -47,12 +48,13 @@ const generateUserlogintoken = async (credentials) => {
     `${METHODS.ENTERING_TO}||  ${METHODS.BUSINESS_METHOD} || ${METHODS.MODULES.USER.GENERATE_LOGIN_TOKEN}`
   );
   try {
-    const { username, password } = credentials;
+    let { username, password } = credentials;
     logger.debug(`username and password || ${username},${password}`);
     let userdetail = await findUserService({
       $or: [{ userName: username }, { email: username }],
     });
     logger.debug(`userdetails || ${JSON.stringify(userdetail)}`);
+    password = generateSHA256(password);
     if (!userdetail) {
       return apiResponse(STATUS.NOT_FOUND, "No user found");
     }
@@ -60,7 +62,9 @@ const generateUserlogintoken = async (credentials) => {
       return apiResponse(STATUS.BAD_REQUEST, "password doesnt match");
     }
 
-    let accountDetails = await findAccountService({ _id: userdetail.accountId});
+    let accountDetails = await findAccountService({
+      _id: userdetail.accountId,
+    });
     console.log("till here", accountDetails);
     if (!accountDetails) {
       return apiResponse(
