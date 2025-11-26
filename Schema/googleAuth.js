@@ -5,6 +5,8 @@ const { ObjectId } = mongoose.Types;
 const googleAuthSchema = new Schema(
   {
     email: String,
+    clientId: String,
+    clientSecret: String,
     accessToken: String,
     refreshToken: String,
     expiryTime: Number,

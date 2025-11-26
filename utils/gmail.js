@@ -5,17 +5,18 @@ const {
   updateGoogleAuthService,
 } = require("../api/Service/googleAuthService");
 
-const oauth2Client = new google.auth.OAuth2(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-  "https://fasterfrontend.fun/api/oauth2callback"
-);
-
 async function sendMail(payload) {
   try {
     let { to, subject, html, userEmail } = payload;
     const googleAuthDetails = await getGoogleAuthService({ email: userEmail });
-    let { accessToken, refreshToken, expiryTime } = googleAuthDetails;
+    let { accessToken, refreshToken, expiryTime, clientId, clientSecret } =
+      googleAuthDetails;
+
+    const oauth2Client = new google.auth.OAuth2(
+      clientId,
+      clientSecret,
+      "https://fasterfrontend.fun/api/oauth2callback"
+    );
     let currentTimeMilis = new Date().getTime();
     if (currentTimeMilis > expiryTime) {
       oauth2Client.setCredentials({
@@ -43,8 +44,8 @@ async function sendMail(payload) {
       auth: {
         type: "OAuth2",
         user: userEmail,
-        clientId: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        clientId: clientId,
+        clientSecret: clientSecret,
         refreshToken: refreshToken,
         accessToken: accessToken,
       },
@@ -66,7 +67,6 @@ async function sendMail(payload) {
 
 module.exports = {
   sendMail,
-  oauth2Client,
 };
 
 // setTimeout(async () => {
