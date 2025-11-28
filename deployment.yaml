@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: faster-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: faster-backend
+  template:
+    metadata:
+      labels:
+        app: faster-backend
+    spec:
+      containers:
+        - name: faster-backend
+          image: gcr.io/faster-479316/faster-backend:v2
+          ports:
+            - containerPort: 5000
