@@ -156,7 +156,7 @@ const createaccountBusiness = async (payload) => {
     return apiResponse(
       STATUS.SUCCESS,
       "",
-      "Account created successfully",
+      "Account created successfully for the provider",
       userDetails
     );
   } catch (error) {
